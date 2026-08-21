@@ -1016,6 +1016,8 @@
     .featured-term-card {
       align-content: start;
       grid-template-rows: auto auto 1fr;
+      min-width: 0;
+      overflow: hidden;
     }
     .featured-term-card .term-badge {
       align-items: center;
@@ -1028,6 +1030,16 @@
     .featured-term-card h3,
     .featured-term-card p {
       margin: 0;
+      min-width: 0;
+      overflow-wrap: anywhere;
+      word-break: break-word;
+    }
+    .featured-term-card h3 {
+      line-height: 1.28;
+    }
+    .featured-term-card h3 a {
+      overflow-wrap: anywhere;
+      word-break: break-word;
     }
     .table-wrap {
       overflow-x: auto;
@@ -1114,8 +1126,10 @@
       margin-bottom: 18px;
       padding: 5px;
       border: 1px solid var(--border);
-      border-radius: 14px;
-      background: rgba(255, 255, 255, 0.72);
+      border-radius: 12px;
+      background: #f3f6f7;
+      overflow: hidden;
+      isolation: isolate;
     }
     .graph-view-tab,
     .graph-mode-tab {
@@ -1144,68 +1158,358 @@
     .graph-view-panel[hidden] {
       display: none;
     }
+    .graph-expand-btn {
+      min-height: 36px;
+      padding: 8px 13px;
+      border: 1px solid #c6d2d8;
+      border-radius: 9px;
+      background: rgba(255, 255, 255, 0.96);
+      color: #345664;
+      font: inherit;
+      font-size: 0.84rem;
+      font-weight: 700;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+    .graph-expand-btn--icon {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      z-index: 25;
+      display: grid;
+      place-items: center;
+      width: 36px;
+      height: 36px;
+      min-height: 0;
+      padding: 7px;
+      border-radius: 9px;
+      box-shadow: 0 5px 12px rgba(16, 37, 56, 0.12);
+    }
+    .graph-expand-btn--icon svg {
+      display: block;
+      width: 20px;
+      height: 20px;
+      fill: none;
+      stroke: currentColor;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      stroke-width: 1.8;
+    }
+    .graph-expand-btn--icon svg[hidden] {
+      display: none;
+    }
+    .sigma-controls-toggle {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      z-index: 25;
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      min-height: 36px;
+      padding: 7px 10px;
+      border: 1px solid #c6d2d8;
+      border-radius: 9px;
+      background: rgba(255, 255, 255, 0.96);
+      color: #345664;
+      box-shadow: 0 5px 12px rgba(16, 37, 56, 0.12);
+      font: inherit;
+      font-size: 0.8rem;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    .sigma-controls-toggle svg {
+      width: 19px;
+      height: 19px;
+      fill: none;
+      stroke: currentColor;
+      stroke-linecap: round;
+      stroke-width: 1.7;
+    }
+    .sigma-controls-toggle:hover,
+    .sigma-controls-toggle:focus-visible {
+      border-color: var(--accent);
+      background: #eff8fa;
+      color: var(--accent-strong);
+      outline: 2px solid rgba(14, 123, 129, 0.2);
+      outline-offset: 2px;
+    }
+    .graph-expand-help {
+      position: absolute;
+      top: 54px;
+      right: 10px;
+      z-index: 24;
+      padding: 5px 8px;
+      border: 1px solid rgba(184, 200, 210, 0.78);
+      border-radius: 7px;
+      background: rgba(255, 255, 255, 0.94);
+      color: #5b6773;
+      font-size: 0.76rem;
+      line-height: 1.3;
+      white-space: nowrap;
+      pointer-events: none;
+      box-shadow: 0 5px 12px rgba(16, 37, 56, 0.12);
+    }
+    .graph-expand-help[hidden] {
+      display: none;
+    }
+    .graph-expand-btn:hover,
+    .graph-expand-btn:focus-visible {
+      border-color: var(--accent);
+      background: #eff8fa;
+      color: var(--accent-strong);
+      outline: 2px solid rgba(14, 123, 129, 0.2);
+      outline-offset: 2px;
+    }
+    .graph-view-panel.graph-panel--expanded,
+    .graph-view-panel:fullscreen {
+      position: fixed;
+      inset: 0;
+      z-index: 1000;
+      width: 100vw;
+      height: 100vh;
+      max-width: none;
+      max-height: none;
+      margin: 0;
+      padding: 18px 24px 24px;
+      overflow: auto;
+      border: 0;
+      border-radius: 0;
+      background: var(--panel);
+    }
+    .graph-view-panel:-webkit-full-screen {
+      position: fixed;
+      inset: 0;
+      z-index: 1000;
+      width: 100vw;
+      height: 100vh;
+      margin: 0;
+      padding: 18px 24px 24px;
+      overflow: auto;
+      border: 0;
+      border-radius: 0;
+      background: var(--panel);
+    }
+    body.graph-fullscreen-active {
+      overflow: hidden;
+    }
+    .sigma-graph-panel.graph-controls-collapsed .sigma-layout {
+      grid-template-columns: minmax(0, 1fr);
+    }
+    .sigma-graph-panel.graph-controls-collapsed .sigma-panel {
+      display: none;
+    }
+    .sigma-graph-panel.graph-panel--expanded,
+    .sigma-graph-panel:fullscreen,
+    .sigma-graph-panel:-webkit-full-screen {
+      padding: 0;
+      overflow: hidden;
+      background: #f7fafb;
+    }
+    .sigma-graph-panel.graph-panel--expanded .sigma-layout,
+    .sigma-graph-panel:fullscreen .sigma-layout,
+    .sigma-graph-panel:-webkit-full-screen .sigma-layout {
+      position: absolute;
+      inset: 0;
+      display: block;
+      width: 100%;
+      height: 100%;
+      min-height: 0;
+    }
+    .sigma-graph-panel.graph-panel--expanded .sigma-card,
+    .sigma-graph-panel:fullscreen .sigma-card,
+    .sigma-graph-panel:-webkit-full-screen .sigma-card {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      min-height: 0;
+      padding: 0;
+      border: 0;
+      border-radius: 0;
+      box-shadow: none;
+    }
+    .sigma-graph-panel.graph-panel--expanded #sigma-graph-container,
+    .sigma-graph-panel:fullscreen #sigma-graph-container,
+    .sigma-graph-panel:-webkit-full-screen #sigma-graph-container {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      min-height: 0;
+      border: 0;
+      border-radius: 0;
+    }
+    .sigma-graph-panel.graph-panel--expanded .sigma-panel,
+    .sigma-graph-panel:fullscreen .sigma-panel,
+    .sigma-graph-panel:-webkit-full-screen .sigma-panel {
+      position: absolute;
+      z-index: 45;
+      top: 58px;
+      bottom: 14px;
+      left: 14px;
+      display: grid;
+      width: min(330px, calc(100vw - 28px));
+      height: auto;
+      min-height: 0;
+      max-height: none;
+      padding: 9px;
+      gap: 7px;
+      border-radius: 11px;
+      box-shadow: 0 10px 24px rgba(16, 37, 56, 0.14);
+      transition: transform 180ms ease, opacity 180ms ease;
+    }
+    .sigma-graph-panel.graph-panel--expanded.graph-controls-collapsed .sigma-panel,
+    .sigma-graph-panel:fullscreen.graph-controls-collapsed .sigma-panel,
+    .sigma-graph-panel:-webkit-full-screen.graph-controls-collapsed .sigma-panel {
+      display: grid;
+      transform: translateX(calc(-100% - 24px));
+      opacity: 0;
+      pointer-events: none;
+    }
+    .sigma-graph-panel.graph-panel--expanded .sigma-graph-top,
+    .sigma-graph-panel:fullscreen .sigma-graph-top,
+    .sigma-graph-panel:-webkit-full-screen .sigma-graph-top {
+      position: absolute;
+      z-index: 22;
+      top: 10px;
+      left: 156px;
+      right: 58px;
+      pointer-events: none;
+    }
+    .sigma-graph-panel.graph-panel--expanded .sigma-legend,
+    .sigma-graph-panel:fullscreen .sigma-legend,
+    .sigma-graph-panel:-webkit-full-screen .sigma-legend {
+      width: fit-content;
+      max-width: 100%;
+      margin: 0 auto;
+      padding: 7px 9px;
+      gap: 5px 9px;
+      background: rgba(255, 255, 255, 0.92);
+      box-shadow: 0 5px 14px rgba(16, 37, 56, 0.1);
+      pointer-events: auto;
+    }
+    .sigma-graph-panel.graph-panel--expanded .sigma-graph-hint,
+    .sigma-graph-panel:fullscreen .sigma-graph-hint,
+    .sigma-graph-panel:-webkit-full-screen .sigma-graph-hint {
+      display: none;
+    }
+    .sigma-graph-panel.graph-panel--expanded .graph-mode-tabs,
+    .sigma-graph-panel:fullscreen .graph-mode-tabs,
+    .sigma-graph-panel:-webkit-full-screen .graph-mode-tabs {
+      position: absolute;
+      z-index: 50;
+      bottom: 12px;
+      left: 50%;
+      margin: 0;
+      transform: translateX(-50%);
+      box-shadow: 0 6px 16px rgba(16, 37, 56, 0.13);
+    }
+    .sigma-graph-panel.graph-panel--expanded .sigma-block-toggle,
+    .sigma-graph-panel:fullscreen .sigma-block-toggle,
+    .sigma-graph-panel:-webkit-full-screen .sigma-block-toggle {
+      min-height: 36px;
+      padding: 8px 9px;
+      font-size: 0.86rem;
+    }
+    .sigma-graph-panel.graph-panel--expanded .sigma-block-body,
+    .sigma-graph-panel:fullscreen .sigma-block-body,
+    .sigma-graph-panel:-webkit-full-screen .sigma-block-body {
+      gap: 6px;
+      padding: 7px 9px 9px;
+    }
+    .sigma-graph-panel.graph-panel--expanded .sigma-btn,
+    .sigma-graph-panel:fullscreen .sigma-btn,
+    .sigma-graph-panel:-webkit-full-screen .sigma-btn {
+      min-height: 32px;
+      padding: 6px 9px;
+      font-size: 0.78rem;
+    }
+    .webvowl-graph-surface {
+      position: relative;
+      width: 100%;
+    }
+    .graph-view-panel.graph-panel--expanded .webvowl-graph-surface,
+    .graph-view-panel:fullscreen .webvowl-graph-surface,
+    .graph-view-panel:-webkit-full-screen .webvowl-graph-surface {
+      height: calc(100vh - 142px);
+    }
+    .graph-view-panel.graph-panel--expanded .webvowl-frame,
+    .graph-view-panel:fullscreen .webvowl-frame,
+    .graph-view-panel:-webkit-full-screen .webvowl-frame {
+      height: 100% !important;
+      min-height: 0;
+    }
     .sigma-layout {
       display: grid;
-      grid-template-columns: minmax(285px, 320px) minmax(0, 1fr);
+      grid-template-columns: minmax(292px, 320px) minmax(0, 1fr);
       gap: 16px;
       align-items: stretch;
     }
     .sigma-panel,
     .sigma-card {
       background: #ffffff;
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      box-shadow: 0 18px 38px rgba(16, 37, 56, 0.11);
-      padding: 14px;
+      border: 1px solid #dce4e8;
+      border-radius: 12px;
+      box-shadow: 0 7px 20px rgba(16, 37, 56, 0.065);
+      padding: 12px;
     }
     .sigma-panel {
       display: grid;
-      gap: 14px;
+      grid-auto-rows: max-content;
+      gap: 8px;
       align-content: start;
+      position: relative;
+      min-width: 0;
       min-height: calc(80vh - 100px);
       max-height: calc(150vh - 200px);
       overflow: auto;
       scrollbar-width: thin;
-      scrollbar-color: #9bb3c4 transparent;
+      scrollbar-color: #bdcbd2 transparent;
+      background: #f8fafb;
     }
-    .sigma-panel::-webkit-scrollbar { width: 8px; }
+    .sigma-panel::-webkit-scrollbar { width: 7px; }
     .sigma-panel::-webkit-scrollbar-track { background: transparent; }
     .sigma-panel::-webkit-scrollbar-thumb {
-      background: linear-gradient(180deg, #9fb8c8, #7e9db2);
+      background: #bdcbd2;
       border-radius: 999px;
       border: 2px solid transparent;
       background-clip: padding-box;
     }
     .sigma-block {
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      background: #fcfdff;
+      min-width: 0;
+      border: 1px solid #dfe6e9;
+      border-radius: 8px;
+      background: #ffffff;
+      overflow: visible;
     }
     .sigma-block-toggle {
       width: 100%;
       border: 0;
       border-bottom: 1px solid transparent;
-      background: #f8fbfe;
+      background: #ffffff;
       color: #1f2f3f;
       cursor: pointer;
-      padding: 11px 12px;
+      padding: 9px 10px;
       display: flex;
       align-items: center;
       justify-content: space-between;
       font-family: var(--heading-font);
-      font-size: 0.98rem;
+      font-size: 0.88rem;
       font-weight: 600;
       line-height: 1.2;
-      min-height: 42px;
+      min-height: 38px;
       text-align: left;
       list-style: none;
+      border-radius: 7px;
     }
     .sigma-block-toggle::-webkit-details-marker { display: none; }
     .sigma-block-toggle::marker { content: ""; }
-    .sigma-block-toggle:hover { background: #f2f8fc; }
+    .sigma-block-toggle:hover { background: #f4f7f8; }
     .sigma-block[open] .sigma-block-toggle {
-      border-bottom-color: var(--border);
-      background: #f7fbfd;
+      border-bottom-color: #e4eaed;
+      background: #f7f9fa;
+      border-radius: 7px 7px 0 0;
     }
     .sigma-chevron {
       font-size: 0.9rem;
@@ -1215,9 +1519,10 @@
     }
     .sigma-block[open] .sigma-chevron { transform: rotate(0deg); }
     .sigma-block-body {
-      padding: 10px 12px 12px;
+      min-width: 0;
+      padding: 9px 10px 10px;
       display: grid;
-      gap: 8px;
+      gap: 7px;
     }
     .sigma-muted,
     .sigma-status,
@@ -1227,13 +1532,13 @@
       font-size: 0.86rem;
       line-height: 1.45;
     }
-    .sigma-control-group { display: grid; gap: 7px; }
+    .sigma-control-group { display: grid; gap: 6px; }
     .sigma-control-group label,
     .sigma-block-body > label {
       display: flex;
       align-items: center;
       gap: 8px;
-      font-size: 0.9rem;
+      font-size: 0.86rem;
       color: #2c3946;
     }
     .sigma-filter-title {
@@ -1247,18 +1552,22 @@
     .sigma-search {
       width: 100%;
       border: 1px solid var(--border);
-      border-radius: 10px;
-      font-size: 0.95rem;
-      padding: 9px 10px;
+      border-radius: 8px;
+      font-size: 0.88rem;
+      padding: 8px 9px;
       font-family: inherit;
       color: var(--ink);
       background: #ffffff;
     }
-    .sigma-search-actions { display: grid; gap: 8px; }
+    .sigma-search-actions {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 6px;
+    }
     .sigma-btn {
-      border: 1px solid var(--border);
-      border-radius: 999px;
-      padding: 9px 14px;
+      border: 1px solid #cfdade;
+      border-radius: 7px;
+      padding: 7px 9px;
       font-weight: 600;
       background: #ffffff;
       color: var(--accent);
@@ -1266,36 +1575,123 @@
       align-items: center;
       justify-content: center;
       cursor: pointer;
-      min-height: 36px;
+      min-height: 33px;
+      font-size: 0.8rem;
       font-family: inherit;
     }
     .sigma-btn:hover { background: #f2f8fb; }
     .sigma-btn--reset {
-      background: #0f7383;
+      grid-column: 1 / -1;
+      background: #176e79;
       color: #ffffff;
-      border-color: #0f7383;
-      font-weight: 700;
-      box-shadow: 0 6px 14px rgba(15, 115, 131, 0.28);
-      padding: 10px 16px;
-      min-height: 40px;
+      border-color: #176e79;
+      box-shadow: none;
+      padding: 8px 10px;
+      min-height: 34px;
     }
     .sigma-detail,
-    .sigma-overview,
-    .sigma-hover-info {
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      background: #f7fbfd;
-      padding: 10px;
-      font-size: 0.88rem;
+    .sigma-overview {
+      min-width: 0;
+      font-size: 0.84rem;
       line-height: 1.4;
       color: #2d3c4c;
       display: grid;
-      gap: 6px;
+      gap: 8px;
     }
-    .sigma-detail ul { margin: 0; padding-left: 18px; }
+    .sigma-detail,
+    .sigma-detail * {
+      min-width: 0;
+    }
+    .sigma-detail-heading {
+      display: grid;
+      gap: 5px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid #e5ebee;
+    }
+    .sigma-detail-heading strong {
+      color: #203642;
+      font-family: var(--mono-font);
+      font-size: 0.86rem;
+      overflow-wrap: anywhere;
+    }
+    .sigma-detail-type {
+      width: fit-content;
+      padding: 2px 7px;
+      border-radius: 999px;
+      background: #edf3f5;
+      color: #526571;
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.035em;
+      text-transform: uppercase;
+    }
+    .sigma-detail-label {
+      color: #324a57;
+      font-weight: 600;
+      overflow-wrap: anywhere;
+    }
+    .sigma-detail-description {
+      margin: 0;
+      color: #5a6973;
+      font-size: 0.8rem;
+      overflow-wrap: anywhere;
+    }
+    .sigma-detail-group {
+      display: grid;
+      gap: 5px;
+    }
+    .sigma-detail-group-title {
+      display: flex;
+      justify-content: space-between;
+      color: #4d606b;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.035em;
+      text-transform: uppercase;
+    }
+    .sigma-detail-group ul {
+      display: grid;
+      gap: 4px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+    .sigma-detail-group li {
+      display: grid;
+      gap: 2px;
+      padding: 6px 7px;
+      border-radius: 6px;
+      background: #f5f8f9;
+      overflow-wrap: anywhere;
+    }
+    .sigma-relation-kind {
+      color: #667781;
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+    .sigma-detail-empty {
+      color: #829099;
+      font-style: italic;
+    }
+    .sigma-detail-metadata {
+      display: grid;
+      grid-template-columns: max-content minmax(0, 1fr);
+      gap: 6px 9px;
+      margin: 0;
+    }
+    .sigma-detail-metadata dt {
+      color: #73818a;
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+    .sigma-detail-metadata dd {
+      margin: 0;
+      overflow-wrap: anywhere;
+    }
     .sigma-detail code,
-    .sigma-overview code,
-    .sigma-hover-info code {
+    .sigma-overview code {
       font-family: var(--mono-font);
       background: rgba(31, 111, 120, 0.11);
       color: #16535d;
@@ -1312,9 +1708,9 @@
     .sigma-graph-card { display: grid; gap: 10px; align-content: start; }
     .sigma-graph-top { display: grid; gap: 8px; }
     .sigma-legend {
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      background: #f8fcff;
+      border: 1px solid #dbe4e8;
+      border-radius: 10px;
+      background: #f7fafb;
       padding: 9px 10px;
       display: flex;
       flex-wrap: wrap;
@@ -1359,6 +1755,12 @@
       background: #fbfdff;
       position: relative;
       overflow: hidden;
+    }
+    .sigma-canvas {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
     }
     .sigma-tooltip {
       position: absolute;
@@ -1523,6 +1925,28 @@
       .sigma-panel { max-height: none; }
       #sigma-graph-container { min-height: 520px; height: 70vh; }
     }
+    @media (max-width: 640px) {
+      .graph-view-panel.graph-panel--expanded,
+      .graph-view-panel:fullscreen,
+      .graph-view-panel:-webkit-full-screen {
+        padding: 12px;
+      }
+      .sigma-graph-panel.graph-panel--expanded,
+      .sigma-graph-panel:fullscreen,
+      .sigma-graph-panel:-webkit-full-screen {
+        padding: 0;
+      }
+      .sigma-graph-panel.graph-panel--expanded .sigma-graph-top,
+      .sigma-graph-panel:fullscreen .sigma-graph-top,
+      .sigma-graph-panel:-webkit-full-screen .sigma-graph-top {
+        display: none;
+      }
+      .sigma-graph-panel.graph-panel--expanded .sigma-controls-toggle span,
+      .sigma-graph-panel:fullscreen .sigma-controls-toggle span,
+      .sigma-graph-panel:-webkit-full-screen .sigma-controls-toggle span {
+        display: none;
+      }
+    }
   </style>
 </head>
 <body class="page-graph">
@@ -1548,19 +1972,19 @@
         </div>
         
         <div class="graph-view-tabs" role="tablist" aria-label="Graph representation">
-          <button class="graph-view-tab" type="button" role="tab" data-graph-view="custom" aria-controls="custom-graph-panel">Custom Graph</button>
+          <button class="graph-view-tab" type="button" role="tab" data-graph-view="custom" aria-controls="custom-graph-panel">Ontology Network</button>
           <button class="graph-view-tab" type="button" role="tab" data-graph-view="webvowl" aria-controls="webvowl-graph-panel">WebVOWL</button>
         </div>
       
         
-        <div id="custom-graph-panel" class="graph-view-panel sigma-graph-panel" role="tabpanel" aria-label="Custom Sigma graph">
+        <div id="custom-graph-panel" class="graph-view-panel sigma-graph-panel" role="tabpanel" aria-label="Ontology Network Sigma graph">
           
-        <div class="graph-mode-tabs" role="tablist" aria-label="Custom graph mode">
+        <div class="graph-mode-tabs" role="tablist" aria-label="Ontology Network mode">
           <button class="graph-mode-tab" type="button" role="tab" data-custom-graph-mode="predicate-nodes">Predicates as Nodes</button><button class="graph-mode-tab" type="button" role="tab" data-custom-graph-mode="predicate-edges">Predicates as Edges</button>
         </div>
       
           <div class="sigma-layout">
-            <aside class="sigma-panel">
+            <aside id="sigma-sidebar" class="sigma-panel" aria-label="Ontology Network controls">
               <details class="sigma-block sigma-block--filters" open>
                 <summary class="sigma-block-toggle">Filters <span class="sigma-chevron">▾</span></summary>
                 <div class="sigma-block-body">
@@ -1590,14 +2014,9 @@
                 </div>
               </details>
 
-              <details class="sigma-block" open>
+              <details id="sigma-selection-block" class="sigma-block sigma-block--selection" open>
                 <summary class="sigma-block-toggle">Selection Details <span class="sigma-chevron">▾</span></summary>
                 <div class="sigma-block-body"><div id="sigma-term-detail" class="sigma-detail">Select a node to inspect relationships.</div></div>
-              </details>
-
-              <details class="sigma-block" open>
-                <summary class="sigma-block-toggle">Edge Details <span class="sigma-chevron">▾</span></summary>
-                <div class="sigma-block-body"><div id="sigma-edge-hover-info" class="sigma-hover-info">Hover an edge to inspect relationship information.</div></div>
               </details>
 
               <details class="sigma-block">
@@ -1617,6 +2036,16 @@
                 <div class="sigma-graph-hint">Hover nodes or edges for quick details. Click to select. Drag nodes to adjust layout.</div>
               </div>
               <div id="sigma-graph-container" aria-label="Sigma ontology graph">
+                <div id="sigma-canvas" class="sigma-canvas"></div>
+                <button id="sigma-toggle-controls" class="sigma-controls-toggle" type="button" data-sigma-controls-toggle aria-controls="sigma-sidebar" aria-expanded="true" aria-label="Hide graph controls" title="Hide graph controls">
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16M4 12h10M4 19h7"></path><circle cx="17" cy="12" r="2.5"></circle><circle cx="14" cy="19" r="2.5"></circle></svg>
+                  <span data-sigma-controls-label>Hide controls</span>
+                </button>
+                <button class="graph-expand-btn graph-expand-btn--icon" type="button" data-graph-expand="custom-graph-panel" aria-controls="custom-graph-panel" aria-expanded="false" aria-label="Expand graph view" title="Expand graph view">
+                  <svg data-graph-expand-icon="expand" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9V4h5M20 15v5h-5M15 4h5v5M9 20H4v-5"></path></svg>
+                  <svg data-graph-expand-icon="compress" viewBox="0 0 24 24" aria-hidden="true" hidden><path d="M9 4v5H4M15 20v-5h5M20 9h-5V4M4 15h5v5"></path></svg>
+                </button>
+                <span class="graph-expand-help" data-graph-expand-help hidden>Press Esc to exit full screen.</span>
                 <div id="sigma-edge-tooltip" class="sigma-tooltip sigma-edge-tooltip"></div>
                 <div id="sigma-node-tooltip" class="sigma-tooltip sigma-node-tooltip"></div>
               </div>
@@ -1627,7 +2056,14 @@
         
         <div id="webvowl-graph-panel" class="graph-view-panel" role="tabpanel" aria-label="WebVOWL graph" hidden>
           <p class="graph-view-note">WebVOWL loads the configured ontology URL through the selected WebVOWL service. The default URL points to this site’s published ontology asset.</p>
-          <iframe id="webvowl-frame" class="webvowl-frame" title="WebVOWL ontology graph" loading="lazy" style="height: 760px"></iframe>
+          <div class="webvowl-graph-surface">
+            <iframe id="webvowl-frame" class="webvowl-frame" title="WebVOWL ontology graph" loading="lazy" style="height: 760px"></iframe>
+            <button class="graph-expand-btn graph-expand-btn--icon" type="button" data-graph-expand="webvowl-graph-panel" aria-controls="webvowl-graph-panel" aria-expanded="false" aria-label="Expand graph view" title="Expand graph view">
+              <svg data-graph-expand-icon="expand" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9V4h5M20 15v5h-5M15 4h5v5M9 20H4v-5"></path></svg>
+              <svg data-graph-expand-icon="compress" viewBox="0 0 24 24" aria-hidden="true" hidden><path d="M9 4v5H4M15 20v-5h5M20 9h-5V4M4 15h5v5"></path></svg>
+            </button>
+            <span class="graph-expand-help" data-graph-expand-help hidden>Press Esc to exit full screen.</span>
+          </div>
         </div>
       
       </section>
@@ -1637,6 +2073,113 @@
         const defaultGraphView = "custom";
         const webvowlSettings = {"serviceUrl":"https://service.tib.eu/webvowl/","ontologyUrl":"","ontologyAssetPath":"assets/vord.ttl"};
         const webvowlFrame = document.getElementById("webvowl-frame");
+        const graphExpandPanels = Array.from(document.querySelectorAll(".graph-view-panel"));
+
+        function notifyGraphViewportChange(panel) {
+          window.dispatchEvent(new Event("resize"));
+          [120, 420].forEach((delay) => {
+            window.setTimeout(() => {
+              window.dispatchEvent(new CustomEvent("ocg:graph-viewport-change", { detail: { panelId: panel.id } }));
+            }, delay);
+          });
+        }
+
+        function setGraphControlsCollapsed(panel, collapsed) {
+          if (panel.id !== "custom-graph-panel") return;
+          const button = panel.querySelector("[data-sigma-controls-toggle]");
+          const label = panel.querySelector("[data-sigma-controls-label]");
+          panel.classList.toggle("graph-controls-collapsed", collapsed);
+          button?.setAttribute("aria-expanded", String(!collapsed));
+          button?.setAttribute("aria-label", collapsed ? "Show graph controls" : "Hide graph controls");
+          if (button) button.title = collapsed ? "Show graph controls" : "Hide graph controls";
+          if (label) label.textContent = collapsed ? "Show controls" : "Hide controls";
+          notifyGraphViewportChange(panel);
+        }
+
+        function updateGraphExpandControl(panel, expanded) {
+          const button = panel.querySelector("[data-graph-expand]");
+          const help = panel.querySelector("[data-graph-expand-help]");
+          const expandIcon = panel.querySelector('[data-graph-expand-icon="expand"]');
+          const compressIcon = panel.querySelector('[data-graph-expand-icon="compress"]');
+          if (!button) return;
+          button.setAttribute("aria-expanded", String(expanded));
+          button.setAttribute("aria-label", expanded ? "Exit full screen" : "Expand graph view");
+          button.title = expanded ? "Exit full screen (Esc)" : "Expand graph view";
+          if (expandIcon) expandIcon.hidden = expanded;
+          if (compressIcon) compressIcon.hidden = !expanded;
+          if (help) help.hidden = !expanded;
+        }
+
+        function syncGraphExpandState() {
+          const nativePanel = graphExpandPanels.find((panel) => document.fullscreenElement === panel) || null;
+          const fallbackPanel = graphExpandPanels.find((panel) => panel.classList.contains("graph-panel--expanded")) || null;
+          const activePanel = nativePanel || fallbackPanel;
+          document.body.classList.toggle("graph-fullscreen-active", Boolean(activePanel));
+          graphExpandPanels.forEach((panel) => updateGraphExpandControl(panel, panel === activePanel));
+          if (!activePanel) {
+            graphExpandPanels.forEach((panel) => setGraphControlsCollapsed(panel, false));
+          }
+        }
+
+        async function exitGraphPanel(panel) {
+          panel.classList.remove("graph-panel--expanded");
+          setGraphControlsCollapsed(panel, false);
+          if (document.fullscreenElement === panel && typeof document.exitFullscreen === "function") {
+            try {
+              await document.exitFullscreen();
+            } catch (error) {
+              console.warn("Unable to exit browser full screen mode.", error);
+            }
+          }
+          syncGraphExpandState();
+        }
+
+        async function enterGraphPanel(panel) {
+          setGraphControlsCollapsed(panel, panel.id === "custom-graph-panel");
+          try {
+            if (document.fullscreenElement && document.fullscreenElement !== panel && typeof document.exitFullscreen === "function") {
+              await document.exitFullscreen();
+            }
+            if (typeof panel.requestFullscreen !== "function") {
+              throw new Error("Fullscreen API unavailable");
+            }
+            await panel.requestFullscreen();
+          } catch (error) {
+            panel.classList.add("graph-panel--expanded");
+          }
+          syncGraphExpandState();
+          notifyGraphViewportChange(panel);
+        }
+
+        async function toggleGraphPanel(panel) {
+          const expanded = document.fullscreenElement === panel || panel.classList.contains("graph-panel--expanded");
+          if (expanded) {
+            await exitGraphPanel(panel);
+          } else {
+            await enterGraphPanel(panel);
+          }
+        }
+
+        graphExpandPanels.forEach((panel) => {
+          panel.querySelector("[data-graph-expand]")?.addEventListener("click", (event) => {
+            event.stopPropagation();
+            void toggleGraphPanel(panel);
+          });
+          panel.querySelector("[data-sigma-controls-toggle]")?.addEventListener("click", (event) => {
+            event.stopPropagation();
+            setGraphControlsCollapsed(panel, !panel.classList.contains("graph-controls-collapsed"));
+          });
+        });
+        document.addEventListener("fullscreenchange", syncGraphExpandState);
+        document.addEventListener("keydown", (event) => {
+          if (event.key !== "Escape" || document.fullscreenElement) return;
+          const fallbackPanel = graphExpandPanels.find((panel) => panel.classList.contains("graph-panel--expanded"));
+          if (fallbackPanel) {
+            event.preventDefault();
+            void exitGraphPanel(fallbackPanel);
+          }
+        });
+        syncGraphExpandState();
 
         function selectGraphView(view) {
           graphViewTabs.forEach((tab) => {
@@ -1675,18 +2218,21 @@
           const CUSTOM_MODE_LABEL = { "predicate-nodes": "Predicates as Nodes", "predicate-edges": "Predicates as Edges" };
           const ENABLED_CUSTOM_MODES = ["predicate-nodes","predicate-edges"];
           const DEFAULT_CUSTOM_MODE = "predicate-nodes";
+          const LABEL_SETTINGS = {"density":1.5,"gridCellSize":90,"renderedSizeThreshold":2,"forceAllUnder":80};
+          const LABEL_FONT = "IBM Plex Sans";
           const EDGE_DIM_SIZE = 0.8;
           const EDGE_BASE_SIZE = 2.6;
           const EDGE_HIT_TOLERANCE = 14;
 
-          const container = document.getElementById("sigma-graph-container");
+          const container = document.getElementById("sigma-canvas");
+          const sidebarEl = document.getElementById("sigma-sidebar");
           const legendEl = document.getElementById("sigma-legend");
           const edgeFiltersEl = document.getElementById("sigma-edge-filters");
           const nodeFiltersEl = document.getElementById("sigma-node-filters");
           const statsEl = document.getElementById("sigma-graph-stats");
           const detailEl = document.getElementById("sigma-term-detail");
+          const detailBlockEl = document.getElementById("sigma-selection-block");
           const overviewEl = document.getElementById("sigma-overview-summary");
-          const edgeHoverEl = document.getElementById("sigma-edge-hover-info");
           const edgeTooltipEl = document.getElementById("sigma-edge-tooltip");
           const nodeTooltipEl = document.getElementById("sigma-node-tooltip");
           const statusEl = document.getElementById("sigma-status");
@@ -1709,11 +2255,12 @@
           let draggingNode = false;
           let dragStartedAt = null;
           let dragMoved = false;
-          let hoveredNode = null;
-          let hoveredEdge = null;
           let suppressNextClick = false;
-          let nativeClickHandled = false;
+          let suppressClickReleaseScheduled = false;
           let labelMeasureContext = null;
+          let interactionAbortController = null;
+          let containerResizeObserver = null;
+          let containerResizeFitTimer = null;
 
           function escapeHtml(value) {
             return String(value ?? "")
@@ -1742,15 +2289,32 @@
             if (!eventLike) {
               return null;
             }
-            if (typeof eventLike.x === "number" && typeof eventLike.y === "number") {
+            const original = eventLike.original || eventLike;
+            if (eventLike.original && typeof eventLike.x === "number" && typeof eventLike.y === "number") {
               return { x: eventLike.x, y: eventLike.y };
             }
-            const original = eventLike.original || eventLike;
             if (original && typeof original.clientX === "number" && typeof original.clientY === "number") {
               const rect = container.getBoundingClientRect();
               return { x: original.clientX - rect.left, y: original.clientY - rect.top };
             }
+            if (typeof eventLike.x === "number" && typeof eventLike.y === "number") {
+              return { x: eventLike.x, y: eventLike.y };
+            }
             return null;
+          }
+
+          function shouldSuppressClick() {
+            if (!suppressNextClick) {
+              return false;
+            }
+            if (!suppressClickReleaseScheduled) {
+              suppressClickReleaseScheduled = true;
+              window.setTimeout(() => {
+                suppressNextClick = false;
+                suppressClickReleaseScheduled = false;
+              }, 0);
+            }
+            return true;
           }
 
           function pointToSegmentDistance(point, start, end) {
@@ -1784,6 +2348,18 @@
             return nearest;
           }
 
+          function getNodeLabelPlacement(nodeX, nodeRadius, textWidth, viewportWidth) {
+            const gap = 4;
+            const rightX = nodeX + nodeRadius + gap;
+            const leftX = nodeX - nodeRadius - gap;
+            const rightWouldClip = rightX + textWidth + 10 > viewportWidth;
+            const leftHasRoom = leftX - textWidth - 10 >= 0;
+            if (rightWouldClip && leftHasRoom) {
+              return { x: leftX, left: leftX - textWidth, right: leftX, align: "right" };
+            }
+            return { x: rightX, left: rightX, right: rightX + textWidth, align: "left" };
+          }
+
           function getNodeAtPoint(point) {
             if (!point || !renderer) return null;
             const physicalNode = typeof renderer.getNodeAtPosition === "function"
@@ -1808,12 +2384,11 @@
               const label = displayData?.label || nodeAttributes.label;
               if (!label || displayData?.hidden) return;
               const nodePoint = renderer.graphToViewport(nodeAttributes);
-              const nodeRadius = Math.abs(
-                renderer.graphToViewport({ x: nodeAttributes.x + (displayData?.size || nodeAttributes.size || 7), y: nodeAttributes.y }).x - nodePoint.x
-              );
+              const nodeRadius = Number(displayData?.size || nodeAttributes.size || 7);
               const textWidth = labelMeasureContext.measureText(label).width;
-              const left = nodePoint.x + nodeRadius + 3 - 5;
-              const right = left + textWidth + 10;
+              const placement = getNodeLabelPlacement(nodePoint.x, nodeRadius, textWidth, container.clientWidth);
+              const left = placement.left - 5;
+              const right = placement.right + 5;
               const baseline = nodePoint.y + labelSize / 3;
               const top = baseline - labelSize * 0.85 - 5;
               const bottom = baseline + labelSize * 0.35 + 5;
@@ -1835,22 +2410,16 @@
             const nextNode = getNodeAtPoint(point);
             const nextEdge = nextNode ? null : findNearbyEdge(point);
             if (nextNode) {
-              hoveredNode = nextNode;
-              hoveredEdge = null;
               edgeTooltipEl.classList.remove("visible");
               edgeTooltipEl.innerHTML = "";
               updateNodeTooltip(nextNode, { event: payload });
               return;
             }
             if (nextEdge) {
-              hoveredNode = null;
-              hoveredEdge = nextEdge;
               clearNodeTooltip();
               updateEdgeHoverInfo(nextEdge, { event: payload });
               return;
             }
-            hoveredNode = null;
-            hoveredEdge = null;
             clearNodeTooltip();
             if (selectedEdge) {
               updateEdgeHoverInfo(selectedEdge, null, true);
@@ -2030,20 +2599,43 @@
               "<div><strong>Relations:</strong> " + Object.entries(relationCounts).map(([relation, count]) => escapeHtml(relationLabel(relation)) + " (" + count + ")").join(", ") + "</div>";
           }
 
+          function revealSelectionDetails() {
+            detailBlockEl.open = true;
+            window.requestAnimationFrame(() => {
+              const inset = 8;
+              const blockTop = detailBlockEl.offsetTop;
+              const blockHeight = detailBlockEl.offsetHeight;
+              const visibleTop = sidebarEl.scrollTop;
+              const visibleBottom = visibleTop + sidebarEl.clientHeight;
+              if (blockTop >= visibleTop + inset && blockTop + blockHeight <= visibleBottom - inset) return;
+              const targetTop = blockHeight > sidebarEl.clientHeight - inset * 2
+                ? blockTop - inset
+                : blockTop + blockHeight - sidebarEl.clientHeight + inset;
+              sidebarEl.scrollTo({ top: Math.max(0, targetTop), behavior: "smooth" });
+            });
+          }
+
           function updateDetail(nodeId) {
             if (!nodeId) {
               detailEl.innerHTML = "Select a node to inspect relationships.";
               return;
             }
             const node = nodeById.get(nodeId);
-            const outgoing = graphData.edges.filter((edge) => edge.source === nodeId).map((edge) => "<li>" + escapeHtml(relationLabel(edge.relation)) + " → " + termLink(edge.target) + "</li>").join("");
-            const incoming = graphData.edges.filter((edge) => edge.target === nodeId).map((edge) => "<li>" + termLink(edge.source) + " → " + escapeHtml(relationLabel(edge.relation)) + "</li>").join("");
-            detailEl.innerHTML = "<div><strong>" + escapeHtml(node.qname) + "</strong></div>" +
-              "<div>" + escapeHtml(TYPE_LABEL[node.termType] || node.termType) + "</div>" +
-              (node.label && node.label !== node.qname ? "<div>" + escapeHtml(node.label) + "</div>" : "") +
-              (node.comment ? "<div>" + escapeHtml(node.comment) + "</div>" : "") +
-              "<div><strong>Outgoing</strong></div><ul>" + (outgoing || "<li>None</li>") + "</ul>" +
-              "<div><strong>Incoming</strong></div><ul>" + (incoming || "<li>None</li>") + "</ul>";
+            const outgoingEdges = graphData.edges.filter((edge) => edge.source === nodeId);
+            const incomingEdges = graphData.edges.filter((edge) => edge.target === nodeId);
+            const outgoing = outgoingEdges.map((edge) =>
+              "<li><span class=\"sigma-relation-kind\">" + escapeHtml(relationLabel(edge.relation)) + " →</span>" + termLink(edge.target) + "</li>"
+            ).join("");
+            const incoming = incomingEdges.map((edge) =>
+              "<li><span class=\"sigma-relation-kind\">← " + escapeHtml(relationLabel(edge.relation)) + "</span>" + termLink(edge.source) + "</li>"
+            ).join("");
+            detailEl.innerHTML =
+              "<div class=\"sigma-detail-heading\"><strong>" + escapeHtml(node.qname) + "</strong><span class=\"sigma-detail-type\">" + escapeHtml(TYPE_LABEL[node.termType] || node.termType) + "</span></div>" +
+              (node.label && node.label !== node.qname ? "<div class=\"sigma-detail-label\">" + escapeHtml(node.label) + "</div>" : "") +
+              (node.comment ? "<p class=\"sigma-detail-description\">" + escapeHtml(node.comment) + "</p>" : "") +
+              "<section class=\"sigma-detail-group\"><div class=\"sigma-detail-group-title\"><span>Outgoing</span><span>" + outgoingEdges.length + "</span></div><ul>" + (outgoing || "<li class=\"sigma-detail-empty\">None</li>") + "</ul></section>" +
+              "<section class=\"sigma-detail-group\"><div class=\"sigma-detail-group-title\"><span>Incoming</span><span>" + incomingEdges.length + "</span></div><ul>" + (incoming || "<li class=\"sigma-detail-empty\">None</li>") + "</ul></section>";
+            revealSelectionDetails();
           }
 
           function updateDetailForEdge(edgeId) {
@@ -2052,11 +2644,28 @@
               updateDetail(null);
               return;
             }
-            detailEl.innerHTML = "<div><strong>Selected relationship</strong></div>" +
-              "<div><strong>Relation:</strong> <code>" + escapeHtml(relationLabel(edge.relation)) + "</code></div>" +
-              "<div><strong>Predicate:</strong> <code>" + escapeHtml(edge.predicateQname || edge.relation) + "</code></div>" +
-              "<div><strong>Source:</strong> " + termLink(edge.source) + "</div>" +
-              "<div><strong>Target:</strong> " + termLink(edge.target) + "</div>";
+            detailEl.innerHTML =
+              "<div class=\"sigma-detail-heading\"><strong>" + escapeHtml(edge.predicateQname || relationLabel(edge.relation)) + "</strong><span class=\"sigma-detail-type\">Relationship</span></div>" +
+              "<dl class=\"sigma-detail-metadata\"><dt>Type</dt><dd>" + escapeHtml(relationLabel(edge.relation)) + "</dd><dt>From</dt><dd>" + termLink(edge.source) + "</dd><dt>To</dt><dd>" + termLink(edge.target) + "</dd></dl>";
+            revealSelectionDetails();
+          }
+
+          function selectNode(nodeId) {
+            if (!nodeId || !visibleNodes.has(nodeId)) {
+              return;
+            }
+            if (selectedNode === nodeId) {
+              clearSelection();
+              return;
+            }
+            selectedNode = nodeId;
+            selectedEdge = null;
+            refreshSelectionContext();
+            updateDetail(nodeId);
+            clearEdgeHoverInfo();
+            clearNodeTooltip();
+            renderer.refresh();
+            setStatus("Selected " + qnameNode(nodeId) + ".");
           }
 
           function selectEdge(edgeId) {
@@ -2080,7 +2689,6 @@
           }
 
           function clearEdgeHoverInfo() {
-            edgeHoverEl.innerHTML = "Hover an edge to inspect relationship information.";
             edgeTooltipEl.classList.remove("visible");
             edgeTooltipEl.innerHTML = "";
           }
@@ -2096,11 +2704,6 @@
               clearEdgeHoverInfo();
               return;
             }
-            edgeHoverEl.innerHTML = (selected ? "<div><strong>Selected edge</strong></div>" : "") +
-              "<div><strong>Relation:</strong> <code>" + escapeHtml(relationLabel(edge.relation)) + "</code></div>" +
-              "<div><strong>Predicate:</strong> <code>" + escapeHtml(edge.predicateQname || edge.relation) + "</code></div>" +
-              "<div><strong>Source:</strong> " + termLink(edge.source) + "</div>" +
-              "<div><strong>Target:</strong> " + termLink(edge.target) + "</div>";
             const point = toViewportPoint(payload?.event || payload);
             if (!point) {
               edgeTooltipEl.classList.remove("visible");
@@ -2134,20 +2737,43 @@
                 return { ...attrs, hidden: true };
               }
               const filters = getFilterState();
-              const result = { ...attrs, hidden: false, label: filters.showLabels ? attrs.qname : "" };
+              const result = {
+                ...attrs,
+                hidden: false,
+                label: filters.showLabels ? attrs.qname : "",
+                forceLabel: filters.showLabels && attrs.baseForceLabel,
+                labelColor: "#253846"
+              };
               const matchesQuery = !filters.searchTerm || attrs.qnameLower.includes(filters.searchTerm) || attrs.labelLower.includes(filters.searchTerm);
               if (!matchesQuery) {
                 result.color = hexToRgba(attrs.baseColor, 0.2);
-                result.label = "";
+                result.labelColor = "#9aa6ae";
               }
-              if (selectedEdge && !selectedEdgeEndpoints.has(node)) {
-                result.color = hexToRgba(attrs.baseColor, 0.15);
-                result.label = "";
-              } else if (selectedNode && !selectedNeighborhood.has(node)) {
-                result.color = hexToRgba(attrs.baseColor, 0.17);
-                result.label = "";
-              } else if (selectedNode === node) {
-                result.size = attrs.baseSize * 1.4;
+              if (selectedEdge) {
+                if (!selectedEdgeEndpoints.has(node)) {
+                  result.color = hexToRgba(attrs.baseColor, 0.15);
+                  result.labelColor = "#a4afb6";
+                } else {
+                  result.size = attrs.baseSize * 1.18;
+                  result.color = attrs.baseColor;
+                  result.forceLabel = filters.showLabels;
+                  result.labelColor = "#142f3a";
+                }
+                return result;
+              }
+              if (selectedNode) {
+                if (!selectedNeighborhood.has(node)) {
+                  result.color = hexToRgba(attrs.baseColor, 0.17);
+                  result.labelColor = "#a4afb6";
+                } else if (selectedNode === node) {
+                  result.size = attrs.baseSize * 1.22;
+                  result.color = attrs.baseColor;
+                  result.forceLabel = filters.showLabels;
+                  result.labelColor = "#102f3b";
+                } else {
+                  result.forceLabel = filters.showLabels;
+                  result.labelColor = "#294653";
+                }
               }
               return result;
             });
@@ -2156,14 +2782,24 @@
                 return { ...attrs, hidden: true };
               }
               const result = { ...attrs, hidden: false };
-              if (selectedEdge && edge !== selectedEdge) {
-                result.color = "rgba(117, 127, 140, 0.16)";
-                result.size = EDGE_DIM_SIZE;
-              } else if (selectedNode) {
+              if (selectedEdge) {
+                if (edge !== selectedEdge) {
+                  result.color = "rgba(117, 127, 140, 0.16)";
+                  result.size = EDGE_DIM_SIZE;
+                } else {
+                  result.size = attrs.baseSize * 1.7;
+                  result.color = attrs.baseColor;
+                  result.zIndex = 1;
+                }
+                return result;
+              }
+              if (selectedNode) {
                 const adjacent = graph.source(edge) === selectedNode || graph.target(edge) === selectedNode;
                 if (!adjacent) {
                   result.color = "rgba(117, 127, 140, 0.16)";
                   result.size = EDGE_DIM_SIZE;
+                } else {
+                  result.size = attrs.baseSize * 1.25;
                 }
               }
               return result;
@@ -2237,7 +2873,7 @@
             setStatus("Selection cleared.");
           }
 
-          function setupDragging() {
+          function setupDragging(signal) {
             if (!renderer || typeof renderer.getMouseCaptor !== "function") return;
             const mouseCaptor = renderer.getMouseCaptor();
             if (!mouseCaptor || typeof mouseCaptor.on !== "function") return;
@@ -2295,8 +2931,8 @@
             });
             mouseCaptor.on("mouseup", endDrag);
             mouseCaptor.on("mouseleave", endDrag);
-            window.addEventListener("mouseup", endDrag);
-            window.addEventListener("blur", endDrag);
+            window.addEventListener("mouseup", endDrag, { signal });
+            window.addEventListener("blur", endDrag, { signal });
           }
 
           function setupInteractions() {
@@ -2309,6 +2945,11 @@
             document.getElementById("sigma-reset-view").addEventListener("click", () => { clearSelection(); refresh(); fitCamera(); setStatus("View reset to fit visible graph."); });
             document.getElementById("sigma-term-search").addEventListener("keydown", (event) => { if (event.key === "Enter") { event.preventDefault(); focusTerm(); } });
             document.getElementById("sigma-term-search").addEventListener("input", () => renderer.refresh());
+            window.addEventListener("ocg:graph-viewport-change", (event) => {
+              if (event.detail?.panelId !== "custom-graph-panel" || !renderer) return;
+              renderer.refresh();
+              fitCamera(false);
+            });
             setupRendererInteractions();
           }
 
@@ -2317,76 +2958,20 @@
           }
 
           function setupRendererInteractions() {
-            renderer.on("clickNode", (payload) => {
-              nativeClickHandled = true;
-              queueMicrotask(() => { nativeClickHandled = false; });
-              if (suppressNextClick) { suppressNextClick = false; return; }
-              if (!payload?.node || !visibleNodes.has(payload.node)) return;
-              if (selectedNode === payload.node) {
-                clearSelection();
-                return;
-              }
-              selectedNode = payload.node;
-              selectedEdge = null;
-              refreshSelectionContext();
-              updateDetail(payload.node);
-              clearEdgeHoverInfo();
-              renderer.refresh();
-              setStatus("Selected " + qnameNode(payload.node) + ".");
-            });
-            renderer.on("clickEdge", (payload) => {
-              nativeClickHandled = true;
-              queueMicrotask(() => { nativeClickHandled = false; });
-              if (suppressNextClick) { suppressNextClick = false; return; }
-              if (!payload?.edge || !visibleEdges.has(payload.edge)) return;
-              selectEdge(payload.edge);
-            });
-            renderer.on("clickStage", () => {
-              if (suppressNextClick) { suppressNextClick = false; return; }
-              clearSelection();
-            });
-            renderer.on("enterNode", (payload) => {
-              if (!payload?.node || !visibleNodes.has(payload.node)) return;
-              clearEdgeHoverInfo();
-              updateNodeTooltip(payload.node, payload);
-            });
-            renderer.on("leaveNode", () => {
-              clearNodeTooltip();
-            });
-            renderer.on("enterEdge", (payload) => {
-              if (!payload?.edge || !visibleEdges.has(payload.edge)) return;
-              clearNodeTooltip();
-              updateEdgeHoverInfo(payload.edge, payload);
-            });
-            renderer.on("leaveEdge", () => {
-              if (selectedEdge) {
-                updateEdgeHoverInfo(selectedEdge, null, true);
-              } else {
-                clearEdgeHoverInfo();
-              }
-            });
-            setupDragging();
-            const mouseCaptor = renderer.getMouseCaptor();
-            const handleFallbackClick = (payload) => {
-              if (nativeClickHandled || suppressNextClick) {
-                if (suppressNextClick) suppressNextClick = false;
-                return;
-              }
+            interactionAbortController?.abort();
+            interactionAbortController = new AbortController();
+            const { signal } = interactionAbortController;
+            containerResizeObserver?.disconnect();
+            window.clearTimeout(containerResizeFitTimer);
+            setupDragging(signal);
+            const handleGraphClick = (payload) => {
+              if (payload.target?.closest?.("[data-graph-expand], [data-sigma-controls-toggle]")) return;
+              if (shouldSuppressClick()) return;
               const point = toViewportPoint(payload);
               if (!point) return;
               const node = getNodeAtPoint(point);
-              if (node && visibleNodes.has(node)) {
-                if (selectedNode === node) {
-                  clearSelection();
-                  return;
-                }
-                selectedNode = node;
-                selectedEdge = null;
-                refreshSelectionContext();
-                updateDetail(node);
-                clearEdgeHoverInfo();
-                renderer.refresh();
-                setStatus("Selected " + qnameNode(node) + ".");
+              if (node) {
+                selectNode(node);
                 return;
               }
               const edge = findNearbyEdge(point);
@@ -2396,70 +2981,45 @@
               }
               clearSelection();
             };
-            mouseCaptor?.on?.("click", handleFallbackClick);
-            mouseCaptor?.on?.("mousemovebody", updateFallbackHover);
-            new ResizeObserver(() => renderer.refresh()).observe(container);
+            container.addEventListener("click", handleGraphClick, { signal });
+            container.addEventListener("pointermove", updateFallbackHover, { passive: true, signal });
+            container.addEventListener("pointerleave", () => {
+              clearNodeTooltip();
+              if (selectedEdge) {
+                updateEdgeHoverInfo(selectedEdge, null, true);
+              } else {
+                clearEdgeHoverInfo();
+              }
+            }, { signal });
+            containerResizeObserver = new ResizeObserver(() => {
+              renderer.refresh();
+              window.clearTimeout(containerResizeFitTimer);
+              containerResizeFitTimer = window.setTimeout(() => {
+                renderer.refresh();
+                fitCamera(false);
+              }, 240);
+            });
+            containerResizeObserver.observe(container);
           }
 
-          function runGraphologyRelaxation(iterations = 120) {
-            const ids = graph.nodes();
-            if (ids.length < 2) return;
-            const area = 1000 * 760;
-            const k = Math.sqrt(area / ids.length);
-            let temperature = 18;
-            for (let iteration = 0; iteration < iterations; iteration += 1) {
-              const displacement = Object.fromEntries(ids.map((id) => [id, { x: 0, y: 0 }]));
-              for (let i = 0; i < ids.length; i += 1) {
-                const aId = ids[i];
-                const a = graph.getNodeAttributes(aId);
-                for (let j = i + 1; j < ids.length; j += 1) {
-                  const bId = ids[j];
-                  const b = graph.getNodeAttributes(bId);
-                  let dx = a.x - b.x;
-                  let dy = a.y - b.y;
-                  let distance = Math.hypot(dx, dy);
-                  if (distance < 0.01) {
-                    dx = 0.01;
-                    dy = 0.01;
-                    distance = 0.014;
-                  }
-                  const force = (k * k) / distance * 0.025;
-                  displacement[aId].x += (dx / distance) * force;
-                  displacement[aId].y += (dy / distance) * force;
-                  displacement[bId].x -= (dx / distance) * force;
-                  displacement[bId].y -= (dy / distance) * force;
-                }
-              }
-              graph.forEachEdge((edge, attrs, sourceId, targetId) => {
-                const source = graph.getNodeAttributes(sourceId);
-                const target = graph.getNodeAttributes(targetId);
-                let dx = source.x - target.x;
-                let dy = source.y - target.y;
-                let distance = Math.hypot(dx, dy);
-                if (distance < 0.01) {
-                  dx = 0.01;
-                  dy = 0.01;
-                  distance = 0.014;
-                }
-                const force = (distance * distance) / k * 0.018;
-                displacement[sourceId].x -= (dx / distance) * force;
-                displacement[sourceId].y -= (dy / distance) * force;
-                displacement[targetId].x += (dx / distance) * force;
-                displacement[targetId].y += (dy / distance) * force;
-              });
-              ids.forEach((id) => {
-                const attrs = graph.getNodeAttributes(id);
-                const vector = displacement[id];
-                const magnitude = Math.hypot(vector.x, vector.y);
-                if (magnitude < 0.0001) return;
-                const limited = Math.min(magnitude, temperature);
-                graph.mergeNodeAttributes(id, {
-                  x: Math.max(50, Math.min(950, attrs.x + (vector.x / magnitude) * limited)),
-                  y: Math.max(50, Math.min(710, attrs.y + (vector.y / magnitude) * limited))
-                });
-              });
-              temperature *= 0.965;
-            }
+          function drawReadableNodeLabel(context, data, settings) {
+            if (!data.label) return;
+            context.save();
+            context.font = settings.labelWeight + " " + settings.labelSize + "px " + settings.labelFont;
+            const textWidth = context.measureText(data.label).width;
+            const viewportWidth = context.canvas.clientWidth || context.canvas.width;
+            const placement = getNodeLabelPlacement(data.x, data.size, textWidth, viewportWidth);
+            const x = placement.x;
+            const y = data.y + settings.labelSize / 3;
+            context.textAlign = placement.align;
+            context.lineJoin = "round";
+            context.miterLimit = 2;
+            context.strokeStyle = "rgba(251, 253, 255, 0.96)";
+            context.lineWidth = 3.5;
+            context.strokeText(data.label, x, y);
+            context.fillStyle = data.labelColor || "#253846";
+            context.fillText(data.label, x, y);
+            context.restore();
           }
 
           function buildGraph() {
@@ -2467,18 +3027,63 @@
             const SigmaCtor = window.Sigma;
             if (!graphology?.Graph || !SigmaCtor) throw new Error("Graphology or Sigma failed to load.");
             graph = new graphology.Graph({ type: "directed", multi: true, allowSelfLoops: true });
+            const forceAllLabels = graphData.nodes.length <= LABEL_SETTINGS.forceAllUnder;
+            const priorityCount = Math.min(
+              graphData.nodes.length,
+              Math.max(12, Math.ceil(graphData.nodes.length * 0.18))
+            );
+            const priorityNodeIds = new Set(
+              [...graphData.nodes]
+                .sort((left, right) => (right.degree || 0) - (left.degree || 0) || left.qname.localeCompare(right.qname))
+                .slice(0, priorityCount)
+                .map((node) => node.id)
+            );
             graphData.nodes.forEach((node) => {
               const color = TYPE_COLOR[node.termType] || TYPE_COLOR.declaredTerm;
               const size = node.isExternal ? 5.1 : Math.min(11, 6.5 + Math.sqrt((node.degree || 0) + 1));
-              graph.addNode(node.id, { x: node.x || 0, y: node.y || 0, size, baseSize: size, label: node.qname, qname: node.qname, qnameLower: node.qname.toLowerCase(), labelLower: (node.label || node.qname).toLowerCase(), color, baseColor: color, termType: node.termType, isExternal: node.isExternal });
+              graph.addNode(node.id, {
+                x: node.x || 0,
+                y: node.y || 0,
+                size,
+                baseSize: size,
+                label: node.qname,
+                qname: node.qname,
+                qnameLower: node.qname.toLowerCase(),
+                labelLower: (node.label || node.qname).toLowerCase(),
+                labelColor: "#253846",
+                forceLabel: forceAllLabels || priorityNodeIds.has(node.id),
+                baseForceLabel: forceAllLabels || priorityNodeIds.has(node.id),
+                color,
+                baseColor: color,
+                termType: node.termType,
+                isExternal: node.isExternal
+              });
             });
             graphData.edges.forEach((edge, index) => {
               const color = TYPE_COLOR[edge.relation] || "#6f8394";
               const id = edge.id || "rel-" + String(index + 1).padStart(3, "0");
               graph.addDirectedEdgeWithKey(id, edge.source, edge.target, { type: "arrow", color, baseColor: color, size: EDGE_BASE_SIZE, baseSize: EDGE_BASE_SIZE, relation: edge.relation, label: edge.label || edge.relation });
             });
-            runGraphologyRelaxation();
-            renderer = new SigmaCtor(graph, container, { defaultEdgeType: "arrow", renderEdgeLabels: false, renderLabels: true, labelDensity: 1.1, labelGridCellSize: 70, labelRenderedSizeThreshold: 0, minCameraRatio: 0.04, maxCameraRatio: 18, hideEdgesOnMove: false, enableNodeHoverEvents: true, enableNodeClickEvents: true, enableEdgeHoverEvents: true, enableEdgeClickEvents: true });
+            renderer = new SigmaCtor(graph, container, {
+              defaultEdgeType: "arrow",
+              renderEdgeLabels: false,
+              renderLabels: true,
+              labelDensity: LABEL_SETTINGS.density,
+              labelGridCellSize: LABEL_SETTINGS.gridCellSize,
+              labelRenderedSizeThreshold: LABEL_SETTINGS.renderedSizeThreshold,
+              labelFont: LABEL_FONT,
+              labelSize: 13,
+              labelWeight: "500",
+              labelColor: { attribute: "labelColor", color: "#253846" },
+              labelRenderer: drawReadableNodeLabel,
+              stagePadding: 72,
+              minCameraRatio: 0.04,
+              maxCameraRatio: 18,
+              hideEdgesOnMove: false,
+              hoverRenderer: () => {},
+              enableEdgeHoverEvents: false,
+              enableEdgeClickEvents: false
+            });
             setupReducers();
             recomputeVisibility();
           }
@@ -2508,7 +3113,7 @@
     </main>
     <footer class="site-footer"><div>VoRD ontology sources and companion documentation.</div><div>The generated site is built from the repository&#39;s canonical source files.</div></footer>
     <footer class="site-footer-generator">
-      <span>Generated with <strong>OCG</strong> v1.2.0</span><span class="site-footer-separator" aria-hidden="true">|</span><a class="ocg-footer-repository" href="https://github.com/ecrum19/ocg" target="_blank" rel="noreferrer"><img class="ocg-footer-icon" src="ocg-favicon.png" alt="" width="18" height="18" aria-hidden="true" /><span>OCG repository</span></a><span class="site-footer-separator" aria-hidden="true">|</span><a href="https://github.com/ecrum19/ocg#readme" target="_blank" rel="noreferrer">Documentation</a>
+      <span>Generated with <strong>OCG</strong> v1.2.1</span><span class="site-footer-separator" aria-hidden="true">|</span><a class="ocg-footer-repository" href="https://github.com/ecrum19/ocg" target="_blank" rel="noreferrer"><img class="ocg-footer-icon" src="ocg-favicon.png" alt="" width="18" height="18" aria-hidden="true" /><span>OCG repository</span></a><span class="site-footer-separator" aria-hidden="true">|</span><a href="https://github.com/ecrum19/ocg#readme" target="_blank" rel="noreferrer">Documentation</a>
     </footer>
   </div>
 </body>
