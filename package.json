@@ -1,6 +1,6 @@
 {
   "devDependencies": {
-    "ontology-companion-generator": "^1.1.1"
+    "ontology-companion-generator": "^1.2.0"
   },
   "scripts": {
     "ocg:build": "ocg build",

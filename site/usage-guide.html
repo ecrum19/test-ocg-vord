@@ -1,0 +1,2185 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>VoRD: Vocabulary of Restrictive Datasets Usage Guide</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Usage guide for the VoRD: Vocabulary of Restrictive Datasets companion site." />
+  <link rel="icon" href="favicon.ico" sizes="any" />
+  <link rel="icon" type="image/png" sizes="512x512" href="favicon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #f6f1ea;
+      --bg-alt: #edf3f7;
+      --panel: #ffffff;
+      --card: #ffffff;
+      --ink: #1d1f22;
+      --muted: #5f6b7a;
+      --accent: #1f6f78;
+      --accent-strong: #13535a;
+      --border: #d6dee6;
+      --heading-font: "Space Grotesk", sans-serif;
+      --body-font: "IBM Plex Sans", sans-serif;
+      --mono-font: "IBM Plex Mono", monospace;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      font-family: var(--body-font);
+      background:
+        radial-gradient(circle at top right, rgba(31, 111, 120, 0.18), transparent 43%),
+        radial-gradient(circle at bottom left, rgba(225, 171, 78, 0.16), transparent 40%),
+        linear-gradient(120deg, var(--bg) 0%, var(--bg-alt) 65%, #f8f2e6 100%);
+      min-height: 100vh;
+    }
+    body::before {
+      content: "";
+      position: fixed;
+      width: 420px;
+      height: 420px;
+      top: -140px;
+      right: -120px;
+      background: radial-gradient(circle at top, rgba(31, 111, 120, 0.18), transparent 70%);
+      z-index: -1;
+    }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    code, pre { font-family: var(--mono-font); }
+    .page-shell {
+      width: min(1120px, 92vw);
+      margin: 0 auto;
+      padding: 48px 0 80px;
+    }
+    .page-graph .page-shell {
+      width: min(1450px, 95vw);
+      padding: 24px 0 46px;
+    }
+    .site-header {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      align-items: center;
+      margin-bottom: 34px;
+      padding: 14px 16px;
+      background: rgba(255, 255, 255, 0.88);
+      border: 1px solid var(--border);
+      backdrop-filter: blur(12px);
+      border-radius: 16px;
+      box-shadow: 0 18px 38px rgba(16, 37, 56, 0.11);
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      min-width: 0;
+    }
+    .brand-mark {
+      width: 48px;
+      height: 48px;
+      display: grid;
+      place-items: center;
+      border-radius: 14px;
+      background: linear-gradient(140deg, #248992 0%, var(--accent) 100%);
+      color: #ffffff;
+      font-family: var(--heading-font);
+      font-size: 1rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      flex: 0 0 auto;
+    }
+    .brand-copy {
+      display: grid;
+      gap: 3px;
+      min-width: 0;
+    }
+    .brand-copy strong {
+      font-family: var(--heading-font);
+      font-size: 1rem;
+    }
+    .brand-copy span {
+      color: var(--muted);
+      font-size: 0.86rem;
+      overflow-wrap: anywhere;
+    }
+    .site-nav {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      gap: 10px;
+    }
+    .nav-link {
+      padding: 8px 11px;
+      border-radius: 999px;
+      font-weight: 600;
+      color: #294456;
+      transition: background-color 0.2s ease, color 0.2s ease;
+    }
+    .nav-link:hover,
+    .nav-link.is-active {
+      color: var(--accent-strong);
+      background: rgba(31, 111, 120, 0.12);
+    }
+    .nav-link--guide,
+    .nav-link--how-to {
+      color: #687681;
+      background: #f0f2f3;
+      border: 1px solid #d7dde1;
+    }
+    .nav-link--guide:hover,
+    .nav-link--how-to:hover,
+    .nav-link--guide.is-active {
+      color: #45525c;
+      background: #e4e8ea;
+      border-color: #c4ccd1;
+      text-decoration: none;
+    }
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1.55fr) minmax(280px, 0.95fr);
+      gap: 18px;
+      margin-bottom: 26px;
+    }
+    .hero-copy,
+    .hero-panel,
+    .section,
+    .graph-shell,
+    .viewer {
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.96) 0%, rgba(250, 252, 253, 0.96) 100%);
+      border: 1px solid var(--border);
+      border-radius: 22px;
+      box-shadow: 0 18px 38px rgba(16, 37, 56, 0.11);
+    }
+    .hero-copy {
+      padding: 28px;
+    }
+    .hero-panel {
+      padding: 22px;
+      display: grid;
+      align-content: start;
+      gap: 14px;
+    }
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 10px;
+      padding: 7px 12px;
+      border-radius: 999px;
+      background: rgba(31, 111, 120, 0.12);
+      color: var(--accent-strong);
+      font-size: 0.84rem;
+      font-weight: 700;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+    }
+    h1, h2, h3 {
+      margin: 0;
+      font-family: var(--heading-font);
+      letter-spacing: -0.02em;
+    }
+    h1 {
+      font-size: clamp(2.3rem, 4vw, 3.5rem);
+      margin-bottom: 14px;
+    }
+    h2 {
+      font-size: clamp(1.45rem, 2.2vw, 2rem);
+    }
+    h3 {
+      font-size: 1.08rem;
+      margin-bottom: 9px;
+    }
+    p {
+      margin: 0;
+      line-height: 1.65;
+      color: var(--muted);
+    }
+    .hero-actions,
+    .site-footer,
+    .graph-controls,
+    .tabs,
+    .viewer-head {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      align-items: center;
+    }
+    .page-home .site-header {
+      margin-bottom: 24px;
+      padding: 12px 14px;
+    }
+    .page-home .brand {
+      gap: 11px;
+    }
+    .page-home .brand-mark {
+      width: 42px;
+      height: 42px;
+      border-radius: 12px;
+      font-size: 0.9rem;
+    }
+    .page-home .brand-copy strong {
+      font-size: 0.92rem;
+    }
+    .page-home .brand-copy span {
+      font-size: 0.76rem;
+    }
+    .page-home .site-nav {
+      gap: 6px;
+    }
+    .page-home .nav-link {
+      padding: 7px 10px;
+      font-size: 0.88rem;
+    }
+    .page-home .hero {
+      grid-template-columns: minmax(0, 1.4fr) minmax(280px, 0.9fr);
+      gap: 14px;
+      margin-bottom: 18px;
+    }
+    .page-home .hero-copy {
+      padding: 24px;
+    }
+    .page-home .hero-panel {
+      padding: 18px;
+      gap: 10px;
+    }
+    .page-home h1 {
+      font-size: clamp(1.95rem, 3.2vw, 2.85rem);
+      line-height: 1.08;
+      margin-bottom: 10px;
+    }
+    .page-home .hero-copy > p {
+      max-width: 62ch;
+      font-size: 0.98rem;
+      line-height: 1.52;
+    }
+    .page-home .hero-panel h2 {
+      font-size: 1.45rem;
+    }
+    .page-home .hero-panel > p {
+      font-size: 0.9rem;
+      line-height: 1.48;
+    }
+    .page-home .hero-actions {
+      display: grid;
+      gap: 9px;
+      margin-top: 18px;
+      align-items: stretch;
+    }
+    .page-home .hero-action-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+      align-items: center;
+    }
+    .page-home .hero-action-group--artifacts {
+      display: grid;
+      grid-template-columns: repeat(var(--artifact-count, 1), minmax(0, 1fr));
+      padding-top: 9px;
+      border-top: 1px solid var(--border);
+    }
+    .page-home .hero-action-group--artifacts .btn {
+      width: 100%;
+    }
+    .page-home .hero-actions .btn {
+      min-height: 34px;
+      padding: 8px 11px;
+      border-radius: 10px;
+      font-size: 0.82rem;
+    }
+    .page-home .meta-grid {
+      gap: 8px;
+    }
+    .page-home .meta-grid div {
+      padding: 10px;
+      border-radius: 11px;
+    }
+    .page-home .meta-item--namespace,
+    .page-home .meta-item--canonical {
+      grid-column: 1 / -1;
+    }
+    .page-home .meta-grid dt {
+      margin-bottom: 4px;
+      font-size: 0.75rem;
+    }
+    .page-home .meta-grid dd {
+      font-size: 0.86rem;
+    }
+    .page-home .namespace-value {
+      gap: 7px;
+    }
+    .page-home .namespace-value code {
+      font-size: 0.78rem;
+    }
+    .page-home .icon-button {
+      width: 30px;
+      height: 30px;
+      padding: 6px;
+      border-radius: 9px;
+    }
+    .page-home .icon-button svg {
+      width: 16px;
+      height: 16px;
+    }
+    .page-home main > .section {
+      padding: 18px;
+      margin-bottom: 18px;
+    }
+    .page-home main > .section .section-head {
+      margin-bottom: 14px;
+    }
+    .page-home main > .section h2 {
+      font-size: 1.45rem;
+    }
+    .page-home main > .section .section-note {
+      font-size: 0.9rem;
+    }
+    .page-home .metrics-grid {
+      grid-template-columns: repeat(var(--metric-count, 1), minmax(0, 1fr));
+      gap: 10px;
+    }
+    .page-home .metric-card {
+      padding: 13px;
+      border-radius: 12px;
+      gap: 6px;
+    }
+    .page-home .metric-number {
+      font-size: 1.6rem;
+      line-height: 1;
+      margin-bottom: 0;
+    }
+    .page-home .metric-label {
+      font-size: 0.8rem;
+      line-height: 1.25;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      min-height: 40px;
+      padding: 11px 16px;
+      border-radius: 12px;
+      border: 1px solid transparent;
+      font-size: 0.94rem;
+      font-weight: 600;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease, background-color 0.2s ease;
+    }
+    .btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 12px 24px rgba(19, 55, 70, 0.18);
+    }
+    .btn:focus-visible {
+      outline: 3px solid rgba(31, 111, 120, 0.25);
+      outline-offset: 2px;
+    }
+    .btn--primary {
+      background: linear-gradient(140deg, #248992 0%, var(--accent) 100%);
+      border-color: #1c7d86;
+      color: #ffffff;
+      box-shadow: 0 8px 18px rgba(31, 111, 120, 0.24);
+    }
+    .btn--ghost {
+      border-color: #c7d3de;
+      background: rgba(255, 255, 255, 0.92);
+      color: var(--accent-strong);
+    }
+    .btn--ghost:hover {
+      border-color: #9ab0c3;
+      background: #ffffff;
+    }
+    .btn--small {
+      min-height: 36px;
+      padding: 8px 12px;
+      font-size: 0.88rem;
+    }
+    .meta-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+      margin: 0;
+    }
+    .meta-grid div {
+      padding: 14px;
+      border-radius: 14px;
+      border: 1px solid var(--border);
+      background: var(--card);
+    }
+    .meta-grid dt {
+      margin-bottom: 6px;
+      color: var(--muted);
+      font-size: 0.85rem;
+      font-weight: 600;
+    }
+    .meta-grid dd {
+      margin: 0;
+      overflow-wrap: anywhere;
+    }
+    .namespace-value {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+    .namespace-value code {
+      min-width: 0;
+      overflow-x: auto;
+      white-space: nowrap;
+    }
+    .icon-button {
+      display: inline-grid;
+      flex: 0 0 auto;
+      place-items: center;
+      width: 34px;
+      height: 34px;
+      padding: 7px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: #ffffff;
+      color: var(--accent-strong);
+      cursor: pointer;
+      transition: transform 0.18s ease, background 0.18s ease, border-color 0.18s ease;
+    }
+    .icon-button:hover,
+    .icon-button:focus-visible {
+      transform: translateY(-1px);
+      border-color: var(--accent);
+      background: rgba(14, 123, 129, 0.08);
+      outline: none;
+    }
+    .icon-button[data-copied="true"] {
+      background: rgba(14, 123, 129, 0.14);
+      border-color: var(--accent);
+    }
+    .icon-button svg {
+      width: 18px;
+      height: 18px;
+      fill: none;
+      stroke: currentColor;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      stroke-width: 1.8;
+    }
+    .section {
+      padding: 22px;
+      margin-bottom: 24px;
+    }
+    .section-head {
+      display: grid;
+      gap: 8px;
+      margin-bottom: 18px;
+    }
+    .section-note {
+      max-width: 78ch;
+    }
+    .reference-hierarchy {
+      background:
+        linear-gradient(135deg, rgba(255, 255, 255, 0.98), rgba(239, 247, 248, 0.94)),
+        var(--panel);
+    }
+    .hierarchy-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: -4px 0 16px;
+      color: var(--muted);
+      font-size: 0.82rem;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+    }
+    .hierarchy-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.4fr) minmax(260px, 0.8fr);
+      gap: 18px;
+      align-items: start;
+    }
+    .hierarchy-tree,
+    .hierarchy-links {
+      padding: 16px;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      background: rgba(255, 255, 255, 0.82);
+    }
+    .hierarchy-tree > ul,
+    .hierarchy-tree ul {
+      display: grid;
+      gap: 7px;
+      margin: 0;
+      padding-left: 18px;
+      list-style: none;
+    }
+    .hierarchy-tree > ul {
+      padding-left: 0;
+    }
+    .hierarchy-item {
+      min-width: 0;
+    }
+    .hierarchy-item details {
+      border-left: 2px solid #d8e5e7;
+      padding-left: 12px;
+    }
+    .hierarchy-item summary,
+    .hierarchy-item--leaf {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      min-height: 35px;
+      padding: 7px 9px;
+      border: 1px solid #e0e8e9;
+      border-radius: 9px;
+      background: #fbfdfd;
+      color: var(--ink);
+      cursor: pointer;
+      list-style: none;
+    }
+    .hierarchy-item summary::-webkit-details-marker {
+      display: none;
+    }
+    .hierarchy-item summary::before {
+      content: ">";
+      flex: 0 0 auto;
+      color: var(--accent);
+      font-family: var(--mono-font);
+      font-weight: 700;
+      transform: rotate(0deg);
+      transition: transform 0.16s ease;
+    }
+    .hierarchy-item details[open] > summary::before {
+      transform: rotate(90deg);
+    }
+    .hierarchy-item summary:hover,
+    .hierarchy-item summary:focus-visible,
+    .hierarchy-item--leaf:hover {
+      border-color: #b9d1d4;
+      background: #f1f8f8;
+      outline: none;
+    }
+    .hierarchy-item summary .hierarchy-term,
+    .hierarchy-item--leaf .hierarchy-term {
+      flex: 1 1 auto;
+      min-width: 0;
+    }
+    .hierarchy-term {
+      display: inline-flex;
+      flex-wrap: wrap;
+      align-items: baseline;
+      gap: 7px;
+      color: var(--ink);
+      overflow-wrap: anywhere;
+    }
+    .hierarchy-term:hover {
+      color: var(--accent-strong);
+      text-decoration: none;
+    }
+    .hierarchy-term code {
+      color: var(--muted);
+      font-size: 0.78rem;
+    }
+    .hierarchy-child-count {
+      display: inline-grid;
+      place-items: center;
+      flex: 0 0 auto;
+      min-width: 22px;
+      height: 22px;
+      padding: 0 5px;
+      border-radius: 999px;
+      background: #e8f1f2;
+      color: #4e6d72;
+      font-size: 0.72rem;
+      font-weight: 700;
+    }
+    .hierarchy-links h3 {
+      margin: 0 0 10px;
+      font-size: 1.02rem;
+    }
+    .hierarchy-links ul {
+      display: grid;
+      gap: 10px;
+      margin: 0;
+      padding-left: 17px;
+      color: var(--muted);
+    }
+    .hierarchy-links li {
+      line-height: 1.5;
+    }
+    .hierarchy-empty {
+      padding: 14px 16px;
+      border: 1px dashed #b9cdd0;
+      border-radius: 12px;
+      background: rgba(241, 248, 248, 0.72);
+      color: var(--muted);
+      line-height: 1.55;
+    }
+    .hierarchy-links .hierarchy-term {
+      display: inline;
+    }
+    .hierarchy-relation {
+      display: inline-block;
+      margin: 0 3px;
+      color: var(--accent-strong);
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+    .card-grid,
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 14px;
+    }
+    .guide-hero {
+      display: grid;
+      grid-template-columns: max-content minmax(0, 1fr);
+      align-items: stretch;
+      gap: 28px;
+      padding: 30px;
+      background:
+        linear-gradient(135deg, rgba(255, 255, 255, 0.98), rgba(239, 247, 248, 0.96)),
+        var(--panel);
+    }
+    .guide-hero > .guide-toc {
+      width: fit-content;
+      max-width: min(100%, 360px);
+      margin: 0;
+      align-self: stretch;
+    }
+    .guide-hero-copy {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 14px;
+      min-width: 0;
+      padding: 8px 0;
+    }
+    .guide-hero > .guide-toc:not([open]) {
+      width: fit-content;
+      align-self: start;
+    }
+    .guide-hero h1 {
+      max-width: 780px;
+      margin-bottom: 12px;
+      font-size: clamp(2rem, 3.5vw, 3rem);
+    }
+    .guide-hero-copy > p {
+      max-width: 78ch;
+    }
+    .guide-toc {
+      width: fit-content;
+      max-width: 100%;
+      margin-right: auto;
+      margin-left: auto;
+      padding: 0;
+      overflow: hidden;
+      background: linear-gradient(180deg, #ffffff 0%, #f9fbfb 100%);
+      border: 1px solid #d8e0e3;
+      border-radius: 16px;
+      box-shadow: 0 12px 28px rgba(16, 37, 56, 0.08);
+      scroll-margin-top: 28px;
+    }
+    .guide-toc-summary,
+    .guide-toc-nav {
+      width: 100%;
+    }
+    .guide-toc-summary {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      min-height: 66px;
+      padding: 14px 20px;
+      cursor: pointer;
+      list-style: none;
+    }
+    .guide-toc-summary::-webkit-details-marker {
+      display: none;
+    }
+    .guide-toc-heading {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .guide-toc-heading h2 {
+      color: var(--ink);
+      font-size: 1.18rem;
+      letter-spacing: -0.015em;
+    }
+    .guide-toc[open] .guide-toc-summary {
+      border-bottom: 1px solid #e2e8ea;
+    }
+    .guide-toc-toggle {
+      position: relative;
+      flex: 0 0 28px;
+      width: 28px;
+      height: 28px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: #f0f2f3;
+    }
+    .guide-toc-toggle::before,
+    .guide-toc-toggle::after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 11px;
+      height: 1px;
+      background: #687681;
+      transform: translate(-50%, -50%);
+    }
+    .guide-toc-toggle::after {
+      transform: translate(-50%, -50%) rotate(90deg);
+      transition: transform 0.18s ease;
+    }
+    .guide-toc[open] .guide-toc-toggle::after {
+      transform: translate(-50%, -50%) rotate(0deg);
+    }
+    .guide-toc-summary:hover .guide-toc-toggle {
+      border-color: #bdc7cc;
+      background: #e4e8ea;
+    }
+    .guide-toc-nav {
+      padding: 18px 20px 22px;
+    }
+    .guide-toc-list {
+      display: grid;
+      gap: 3px;
+      margin: 0;
+      padding: 2px 0 2px 14px;
+      border-left: 2px solid #e2e9eb;
+      list-style: none;
+    }
+    .guide-toc-item--level-1 {
+      margin-left: 30px;
+    }
+    .guide-toc-link {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-height: 32px;
+      padding: 5px 9px;
+      border: 1px solid transparent;
+      border-radius: 8px;
+      color: var(--muted);
+      font-size: 0.86rem;
+      font-weight: 600;
+      transition: background-color 0.18s ease, border-color 0.18s ease, color 0.18s ease;
+    }
+    .guide-toc-item--level-0 .guide-toc-link {
+      border-color: #e5ebed;
+      background: rgba(241, 245, 246, 0.72);
+      color: var(--ink);
+      font-weight: 700;
+    }
+    .guide-toc-item--level-1 .guide-toc-link {
+      min-height: 29px;
+      padding-left: 12px;
+      font-size: 0.82rem;
+      font-weight: 500;
+    }
+    .guide-toc-marker {
+      display: inline-grid;
+      flex: 0 0 26px;
+      place-items: center;
+      width: 26px;
+      height: 22px;
+      border: 1px solid #d7e1e4;
+      border-radius: 6px;
+      background: #edf3f4;
+      color: #52646c;
+      font-family: var(--mono-font);
+      font-size: 0.68rem;
+      font-weight: 600;
+      letter-spacing: 0.03em;
+    }
+    .guide-toc-item--level-1 .guide-toc-marker {
+      flex-basis: 7px;
+      width: 7px;
+      height: 7px;
+      border: 1px solid #aeb9bf;
+      border-radius: 50%;
+      background: transparent;
+      font-size: 0;
+    }
+    .guide-toc-link:hover {
+      border-color: var(--border);
+      background: #f0f2f3;
+      color: var(--accent-strong);
+      text-decoration: none;
+    }
+    .guide-toc-item--level-0 .guide-toc-link:hover {
+      border-color: #cbd8dc;
+      background: #eef3f4;
+    }
+    .guide-quick-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: auto;
+    }
+    .guide-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 12px;
+    }
+    .guide-card {
+      display: grid;
+      align-content: start;
+      gap: 8px;
+      padding: 16px;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      background: var(--card);
+    }
+    .guide-card .term-badge {
+      width: fit-content;
+      margin: 0 0 2px;
+    }
+    .guide-card h3 {
+      margin-bottom: 0;
+    }
+    .guide-card p {
+      font-size: 0.92rem;
+      line-height: 1.5;
+    }
+    .guide-card h3 a {
+      color: var(--ink);
+    }
+    .guide-card h3 a:hover {
+      color: var(--accent-strong);
+      text-decoration: none;
+    }
+    .guide-component {
+      scroll-margin-top: 28px;
+    }
+    .guide-component .section-head {
+      align-items: end;
+    }
+    .guide-component .section-head > div {
+      min-width: 0;
+    }
+    .guide-component .section-head .term-badge {
+      margin-bottom: 8px;
+    }
+    .guide-component h3 {
+      margin-top: 22px;
+      margin-bottom: 8px;
+    }
+    .guide-example-note {
+      margin-bottom: 12px;
+      color: var(--muted);
+    }
+    .guide-options-wrap {
+      overflow-x: auto;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      background: var(--card);
+    }
+    .guide-options {
+      width: 100%;
+      min-width: 680px;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+    }
+    .guide-options th,
+    .guide-options td {
+      padding: 10px 12px;
+      border-bottom: 1px solid var(--border);
+      text-align: left;
+      vertical-align: top;
+    }
+    .guide-options thead th {
+      color: var(--ink);
+      background: rgba(237, 243, 247, 0.72);
+      font-size: 0.78rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+    .guide-options tbody tr:last-child th,
+    .guide-options tbody tr:last-child td {
+      border-bottom: 0;
+    }
+    .guide-options tbody th {
+      width: 38%;
+      color: var(--accent-strong);
+      font-weight: 600;
+    }
+    .guide-options tbody td {
+      color: var(--muted);
+      line-height: 1.5;
+    }
+    .guide-steps {
+      display: grid;
+      gap: 12px;
+      margin: 0;
+      padding-left: 24px;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+    .guide-steps strong {
+      color: var(--ink);
+    }
+    .guide-code {
+      margin: 0;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      background: #102027;
+      color: #ecf5f7;
+      font-size: 0.84rem;
+      line-height: 1.55;
+      overflow-x: auto;
+    }
+    .guide-callout {
+      padding: 14px 16px;
+      border-left: 4px solid var(--accent);
+      border-radius: 8px;
+      background: rgba(31, 111, 120, 0.08);
+      color: var(--muted);
+      line-height: 1.55;
+    }
+    .guide-callout strong {
+      color: var(--ink);
+    }
+    .how-to-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 30px;
+      padding: 5px 10px;
+      border: 1px solid #d1d8dc;
+      border-radius: 999px;
+      background: #eef1f2;
+      color: #687681;
+      font-size: 0.78rem;
+      font-weight: 600;
+      white-space: nowrap;
+      box-shadow: none;
+      transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+    }
+    .how-to-link:hover {
+      border-color: #bdc7cc;
+      background: #e4e8ea;
+      color: #45525c;
+      text-decoration: none;
+    }
+    .section-heading-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+    .section-heading-row h1,
+    .section-heading-row h2 {
+      margin-bottom: 0;
+    }
+    .card,
+    .metric-card {
+      padding: 20px;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      background: var(--card);
+      box-shadow: 0 18px 34px rgba(25, 39, 52, 0.08);
+      display: grid;
+      gap: 12px;
+    }
+    .card-link {
+      display: inline-flex;
+      margin-top: 12px;
+      font-weight: 700;
+      color: var(--accent-strong);
+    }
+    .metric-number {
+      font-family: var(--heading-font);
+      font-size: 2rem;
+      margin-bottom: 4px;
+    }
+    .metric-label {
+      color: var(--muted);
+      font-weight: 600;
+    }
+    .term-badge {
+      display: inline-flex;
+      margin-bottom: 12px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: rgba(14, 123, 129, 0.1);
+      color: var(--accent-strong);
+      font-size: 0.8rem;
+      font-weight: 700;
+    }
+    .featured-terms-grid {
+      align-items: stretch;
+    }
+    .featured-term-card {
+      align-content: start;
+      grid-template-rows: auto auto 1fr;
+    }
+    .featured-term-card .term-badge {
+      align-items: center;
+      justify-content: center;
+      min-height: 30px;
+      margin-bottom: 0;
+      box-sizing: border-box;
+      line-height: 1.2;
+    }
+    .featured-term-card h3,
+    .featured-term-card p {
+      margin: 0;
+    }
+    .table-wrap {
+      overflow-x: auto;
+      margin-top: 12px;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      background: #ffffff;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 760px;
+      background: #ffffff;
+    }
+    th, td {
+      text-align: left;
+      vertical-align: top;
+      padding: 10px 12px;
+      font-size: 0.9rem;
+      line-height: 1.45;
+      border-bottom: 1px solid var(--border);
+    }
+    th {
+      color: #234;
+      font-size: 0.88rem;
+      background: #edf5f8;
+      position: sticky;
+      top: 0;
+      z-index: 1;
+    }
+    tbody tr:nth-child(even) td { background: #fbfdff; }
+    tr:last-child td {
+      border-bottom: none;
+    }
+    .viewer {
+      padding: 18px;
+    }
+    .tabs {
+      margin-bottom: 14px;
+    }
+    .tab {
+      padding: 9px 12px;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      background: #ffffff;
+      color: var(--muted);
+      font-weight: 700;
+      cursor: pointer;
+    }
+    .tab.active {
+      background: rgba(14, 123, 129, 0.12);
+      color: var(--accent-strong);
+      border-color: rgba(14, 123, 129, 0.3);
+    }
+    .viewer-head {
+      justify-content: space-between;
+      margin-bottom: 12px;
+    }
+    .viewer-note {
+      color: var(--muted);
+      margin-top: 4px;
+    }
+    .viewer-pane {
+      margin: 0;
+      min-height: 340px;
+      padding: 18px;
+      border-radius: 16px;
+      border: 1px solid var(--border);
+      background: #102027;
+      color: #ecf5f7;
+      overflow: auto;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+    .graph-controls {
+      margin-bottom: 16px;
+      justify-content: space-between;
+    }
+    .graph-view-tabs,
+    .graph-mode-tabs {
+      display: inline-flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 18px;
+      padding: 5px;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      background: rgba(255, 255, 255, 0.72);
+    }
+    .graph-view-tab,
+    .graph-mode-tab {
+      padding: 9px 14px;
+      border: 0;
+      border-radius: 10px;
+      background: transparent;
+      color: var(--muted);
+      font: inherit;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    .graph-view-tab:hover,
+    .graph-view-tab:focus-visible,
+    .graph-mode-tab:hover,
+    .graph-mode-tab:focus-visible {
+      color: var(--accent-strong);
+      outline: 2px solid rgba(14, 123, 129, 0.25);
+      outline-offset: 1px;
+    }
+    .graph-view-tab.active,
+    .graph-mode-tab.active {
+      background: var(--accent-strong);
+      color: #ffffff;
+    }
+    .graph-view-panel[hidden] {
+      display: none;
+    }
+    .sigma-layout {
+      display: grid;
+      grid-template-columns: minmax(285px, 320px) minmax(0, 1fr);
+      gap: 16px;
+      align-items: stretch;
+    }
+    .sigma-panel,
+    .sigma-card {
+      background: #ffffff;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      box-shadow: 0 18px 38px rgba(16, 37, 56, 0.11);
+      padding: 14px;
+    }
+    .sigma-panel {
+      display: grid;
+      gap: 14px;
+      align-content: start;
+      min-height: calc(80vh - 100px);
+      max-height: calc(150vh - 200px);
+      overflow: auto;
+      scrollbar-width: thin;
+      scrollbar-color: #9bb3c4 transparent;
+    }
+    .sigma-panel::-webkit-scrollbar { width: 8px; }
+    .sigma-panel::-webkit-scrollbar-track { background: transparent; }
+    .sigma-panel::-webkit-scrollbar-thumb {
+      background: linear-gradient(180deg, #9fb8c8, #7e9db2);
+      border-radius: 999px;
+      border: 2px solid transparent;
+      background-clip: padding-box;
+    }
+    .sigma-block {
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background: #fcfdff;
+    }
+    .sigma-block-toggle {
+      width: 100%;
+      border: 0;
+      border-bottom: 1px solid transparent;
+      background: #f8fbfe;
+      color: #1f2f3f;
+      cursor: pointer;
+      padding: 11px 12px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-family: var(--heading-font);
+      font-size: 0.98rem;
+      font-weight: 600;
+      line-height: 1.2;
+      min-height: 42px;
+      text-align: left;
+      list-style: none;
+    }
+    .sigma-block-toggle::-webkit-details-marker { display: none; }
+    .sigma-block-toggle::marker { content: ""; }
+    .sigma-block-toggle:hover { background: #f2f8fc; }
+    .sigma-block[open] .sigma-block-toggle {
+      border-bottom-color: var(--border);
+      background: #f7fbfd;
+    }
+    .sigma-chevron {
+      font-size: 0.9rem;
+      color: #4b6073;
+      transition: transform 0.15s ease;
+      transform: rotate(-90deg);
+    }
+    .sigma-block[open] .sigma-chevron { transform: rotate(0deg); }
+    .sigma-block-body {
+      padding: 10px 12px 12px;
+      display: grid;
+      gap: 8px;
+    }
+    .sigma-muted,
+    .sigma-status,
+    .sigma-graph-hint {
+      margin: 0;
+      color: #5b6773;
+      font-size: 0.86rem;
+      line-height: 1.45;
+    }
+    .sigma-control-group { display: grid; gap: 7px; }
+    .sigma-control-group label,
+    .sigma-block-body > label {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.9rem;
+      color: #2c3946;
+    }
+    .sigma-filter-title {
+      margin: 4px 0 0;
+      font-size: 0.79rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: #5b6b7b;
+    }
+    .sigma-search {
+      width: 100%;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      font-size: 0.95rem;
+      padding: 9px 10px;
+      font-family: inherit;
+      color: var(--ink);
+      background: #ffffff;
+    }
+    .sigma-search-actions { display: grid; gap: 8px; }
+    .sigma-btn {
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      padding: 9px 14px;
+      font-weight: 600;
+      background: #ffffff;
+      color: var(--accent);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      min-height: 36px;
+      font-family: inherit;
+    }
+    .sigma-btn:hover { background: #f2f8fb; }
+    .sigma-btn--reset {
+      background: #0f7383;
+      color: #ffffff;
+      border-color: #0f7383;
+      font-weight: 700;
+      box-shadow: 0 6px 14px rgba(15, 115, 131, 0.28);
+      padding: 10px 16px;
+      min-height: 40px;
+    }
+    .sigma-detail,
+    .sigma-overview,
+    .sigma-hover-info {
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: #f7fbfd;
+      padding: 10px;
+      font-size: 0.88rem;
+      line-height: 1.4;
+      color: #2d3c4c;
+      display: grid;
+      gap: 6px;
+    }
+    .sigma-detail ul { margin: 0; padding-left: 18px; }
+    .sigma-detail code,
+    .sigma-overview code,
+    .sigma-hover-info code {
+      font-family: var(--mono-font);
+      background: rgba(31, 111, 120, 0.11);
+      color: #16535d;
+      border-radius: 6px;
+      padding: 2px 6px;
+      word-break: break-word;
+    }
+    .sigma-stats {
+      display: grid;
+      gap: 6px;
+      font-size: 0.88rem;
+      color: #2f4458;
+    }
+    .sigma-graph-card { display: grid; gap: 10px; align-content: start; }
+    .sigma-graph-top { display: grid; gap: 8px; }
+    .sigma-legend {
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background: #f8fcff;
+      padding: 9px 10px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px 12px;
+      align-items: center;
+    }
+    .sigma-legend-title {
+      font-family: var(--heading-font);
+      font-size: 0.95rem;
+      color: #1f2f3f;
+      margin-right: 3px;
+    }
+    .sigma-legend-chip {
+      display: inline-flex;
+      align-items: center;
+      font-size: 0.82rem;
+      color: #32485a;
+      white-space: nowrap;
+      gap: 5px;
+    }
+    .sigma-swatch {
+      width: 11px;
+      height: 11px;
+      border-radius: 3px;
+      border: 1px solid #b9c6d2;
+      flex: 0 0 auto;
+    }
+    .sigma-line {
+      width: 28px;
+      height: 10px;
+      flex: 0 0 auto;
+      display: inline-block;
+      color: var(--line-color, currentColor);
+    }
+    .sigma-line svg { display: block; width: 100%; height: 100%; }
+    #sigma-graph-container {
+      width: 100%;
+      min-height: 670px;
+      height: calc(100vh - 190px);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background: #fbfdff;
+      position: relative;
+      overflow: hidden;
+    }
+    .sigma-tooltip {
+      position: absolute;
+      z-index: 20;
+      pointer-events: none;
+      display: none;
+      max-width: 320px;
+      font-size: 0.78rem;
+      line-height: 1.3;
+      color: #f3f8ff;
+      background: rgba(17, 27, 37, 0.92);
+      border: 1px solid rgba(205, 220, 234, 0.35);
+      border-radius: 8px;
+      padding: 6px 8px;
+      box-shadow: 0 8px 20px rgba(8, 16, 22, 0.28);
+    }
+    .sigma-node-tooltip {
+      max-width: 290px;
+      background: rgba(11, 34, 45, 0.92);
+      border-color: rgba(186, 220, 230, 0.38);
+    }
+    .sigma-tooltip.visible { display: block; }
+    .graph-view-note {
+      margin-bottom: 14px;
+      padding: 12px 14px;
+      border-left: 3px solid var(--accent);
+      border-radius: 8px;
+      background: rgba(14, 123, 129, 0.07);
+    }
+    .webvowl-frame {
+      display: block;
+      width: 100%;
+      min-height: 320px;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      background: #ffffff;
+    }
+    .graph-shell {
+      padding: 12px;
+      overflow: auto;
+    }
+    #graph-svg {
+      width: 100%;
+      min-width: 900px;
+      height: auto;
+      background: linear-gradient(180deg, rgba(248, 251, 252, 0.96) 0%, rgba(236, 243, 245, 0.96) 100%);
+      border-radius: 16px;
+    }
+    .legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 16px;
+    }
+    .legend-item {
+      display: inline-flex;
+      gap: 8px;
+      align-items: center;
+      padding: 8px 10px;
+      border-radius: 999px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      color: var(--muted);
+      font-size: 0.9rem;
+      text-transform: capitalize;
+    }
+    .legend-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 999px;
+    }
+    .checkbox {
+      display: inline-flex;
+      gap: 8px;
+      align-items: center;
+      color: var(--muted);
+      font-weight: 600;
+    }
+    .search {
+      min-width: 260px;
+      max-width: 100%;
+      padding: 10px 12px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      background: #ffffff;
+      color: var(--ink);
+      font: inherit;
+    }
+    .plain-list {
+      margin: 0;
+      padding-left: 18px;
+      color: var(--muted);
+      line-height: 1.65;
+    }
+    .site-footer {
+      justify-content: space-between;
+      padding: 16px 6px 0;
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+    .site-footer-generator {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      gap: 14px;
+      width: 100%;
+      padding: 16px 6px 0;
+      color: var(--muted);
+      font-size: 0.92rem;
+      text-align: center;
+    }
+    .site-footer-generator a {
+      font-weight: 600;
+    }
+    .site-footer-separator {
+      color: var(--border);
+      font-weight: 500;
+    }
+    .ocg-footer-repository {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .ocg-footer-icon {
+      width: 18px;
+      height: 18px;
+      border-radius: 5px;
+      object-fit: contain;
+    }
+    @media (max-width: 860px) {
+      .site-header,
+      .hero,
+      .guide-hero {
+        grid-template-columns: 1fr;
+      }
+      .site-header {
+        align-items: flex-start;
+      }
+      .meta-grid {
+        grid-template-columns: 1fr;
+      }
+      .page-shell {
+        width: min(100vw - 18px, 1120px);
+      }
+      .page-home .hero-action-group--artifacts {
+        grid-template-columns: 1fr;
+      }
+      .page-home .metrics-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+      .guide-hero > .guide-toc {
+        width: 100%;
+        max-width: none;
+      }
+      .hierarchy-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+    @media (max-width: 1100px) {
+      .sigma-layout { grid-template-columns: 1fr; }
+      .sigma-panel { max-height: none; }
+      #sigma-graph-container { min-height: 520px; height: 70vh; }
+    }
+  </style>
+</head>
+<body class="">
+  <div class="page-shell">
+    <header class="site-header">
+      <a class="brand" href="index.html">
+        <span class="brand-mark">VoRD</span>
+        <span class="brand-copy">
+          <strong>VoRD: Vocabulary of Restrictive Datasets</strong>
+          <span>https://w3id.org/vord#</span>
+        </span>
+      </a>
+      <nav class="site-nav"><a class="nav-link nav-link--home" href="index.html">Home</a><a class="nav-link nav-link--reference" href="ontology-reference.html">Reference</a><a class="nav-link nav-link--terms" href="terms/index.html">Terms</a><a class="nav-link nav-link--graph" href="ontology-graph.html">Graph</a><a class="nav-link nav-link--spec" href="spec/index.html">Specification</a><a class="nav-link nav-link--guide is-active" href="usage-guide.html">Usage Guide</a></nav>
+    </header>
+    <main>
+      <section class="guide-hero section">
+        
+    <details class="guide-toc" open>
+      <summary class="guide-toc-summary">
+        <span class="guide-toc-heading"><h2>Contents</h2></span>
+        <span class="guide-toc-toggle" aria-hidden="true"></span>
+      </summary>
+      <nav class="guide-toc-nav" aria-label="Usage Guide table of contents">
+        <ol class="guide-toc-list"><li class="guide-toc-item guide-toc-item--level-0"><a class="guide-toc-link" href="#existing-repository"><span class="guide-toc-marker" aria-hidden="true">01</span><span>Existing Repository Integration</span></a></li><li class="guide-toc-item guide-toc-item--level-0"><a class="guide-toc-link" href="#getting-started"><span class="guide-toc-marker" aria-hidden="true">02</span><span>Getting Started</span></a></li><li class="guide-toc-item guide-toc-item--level-0"><a class="guide-toc-link" href="#repository-layout"><span class="guide-toc-marker" aria-hidden="true">03</span><span>Repository Layout</span></a></li><li class="guide-toc-item guide-toc-item--level-0"><a class="guide-toc-link" href="#accepted-input-formats"><span class="guide-toc-marker" aria-hidden="true">04</span><span>Accepted Input Formats</span></a></li><li class="guide-toc-item guide-toc-item--level-0"><a class="guide-toc-link" href="#components"><span class="guide-toc-marker" aria-hidden="true">05</span><span>Component Overview</span></a></li><li class="guide-toc-item guide-toc-item--level-1"><a class="guide-toc-link" href="#package-cli"><span class="guide-toc-marker" aria-hidden="true"></span><span>Package and CLI</span></a></li><li class="guide-toc-item guide-toc-item--level-1"><a class="guide-toc-link" href="#project"><span class="guide-toc-marker" aria-hidden="true"></span><span>Project Identity</span></a></li><li class="guide-toc-item guide-toc-item--level-1"><a class="guide-toc-link" href="#home"><span class="guide-toc-marker" aria-hidden="true"></span><span>Home</span></a></li><li class="guide-toc-item guide-toc-item--level-1"><a class="guide-toc-link" href="#artifacts"><span class="guide-toc-marker" aria-hidden="true"></span><span>Artifacts and Viewer</span></a></li><li class="guide-toc-item guide-toc-item--level-1"><a class="guide-toc-link" href="#reference"><span class="guide-toc-marker" aria-hidden="true"></span><span>Vocabulary Reference</span></a></li><li class="guide-toc-item guide-toc-item--level-1"><a class="guide-toc-link" href="#graph"><span class="guide-toc-marker" aria-hidden="true"></span><span>Ontology Graph</span></a></li><li class="guide-toc-item guide-toc-item--level-1"><a class="guide-toc-link" href="#terms"><span class="guide-toc-marker" aria-hidden="true"></span><span>Term Pages</span></a></li><li class="guide-toc-item guide-toc-item--level-1"><a class="guide-toc-link" href="#specification"><span class="guide-toc-marker" aria-hidden="true"></span><span>ReSpec Specification</span></a></li><li class="guide-toc-item guide-toc-item--level-1"><a class="guide-toc-link" href="#usage-guide"><span class="guide-toc-marker" aria-hidden="true"></span><span>Usage Guide</span></a></li><li class="guide-toc-item guide-toc-item--level-1"><a class="guide-toc-link" href="#branding"><span class="guide-toc-marker" aria-hidden="true"></span><span>Theme, Footer, and Generator Links</span></a></li><li class="guide-toc-item guide-toc-item--level-0"><a class="guide-toc-link" href="#configuration"><span class="guide-toc-marker" aria-hidden="true">06</span><span>Complete Configuration</span></a></li><li class="guide-toc-item guide-toc-item--level-0"><a class="guide-toc-link" href="#github-pages"><span class="guide-toc-marker" aria-hidden="true">07</span><span>GitHub Pages</span></a></li><li class="guide-toc-item guide-toc-item--level-0"><a class="guide-toc-link" href="#commands"><span class="guide-toc-marker" aria-hidden="true">08</span><span>Useful Commands</span></a></li></ol>
+      </nav>
+    </details>
+        <div class="guide-hero-copy">
+          <div class="eyebrow">Usage Guide</div>
+          <h1>Guide to generating an ontology companion site using OCG.</h1>
+          <p>This guide shows how to add OCG to an existing ontology repository, point it at your current source files, customize the generated pages, and publish the companion site from that repository's <code>main</code> branch.</p>
+          <div class="guide-quick-links">
+            <a class="btn btn--primary" href="#existing-repository">Integrate OCG</a>
+            <a class="btn btn--ghost" href="#configuration">Configure OCG</a>
+            <a class="btn btn--ghost" href="#components">Explore Generated Components</a>
+          </div>
+        </div>
+      </section>
+
+      <section id="existing-repository" class="section guide-section">
+        <div class="section-head"><h2>Existing Repository Integration</h2><p class="section-note">Keep your ontology repository as the source of truth and install OCG alongside it.</p></div>
+        <ol class="guide-steps">
+          <li><strong>Install the package.</strong> Run <code>npm install --save-dev ontology-companion-generator</code>. The package supplies the generator, schema fallback, branding, Sigma.js, Graphology, and RDF parser dependencies.</li>
+          <li><strong>Initialize the repository.</strong> Run <code>npx ocg init --ontology vocab/my-vocabulary.ttl</code>. OCG creates the config, schema, Pages workflow, and npm scripts, and attempts to infer the namespace and common companion files.</li>
+          <li><strong>Review and customize the config.</strong> Paths in <code>sources</code> are relative to the repository root, so an existing <code>vocab/</code>, <code>shapes/</code>, <code>shex/</code>, <code>examples/</code>, or <code>spec/</code> layout can remain unchanged.</li>
+          <li><strong>Validate and build.</strong> Run <code>npm run ocg:check</code>, then <code>npm run ocg:build</code>. Use <code>npm run ocg:dev</code> to inspect the generated site locally.</li>
+          <li><strong>Publish from main.</strong> Enable GitHub Actions as the Pages source and push <code>main</code>. Feature branches should build and validate without deploying over the live site.</li>
+        </ol>
+        <h3>Existing source layout example</h3>
+        <pre class="guide-code"><code>{
+  &quot;sources&quot;: {
+    &quot;ontology&quot;: &quot;vocab/my-vocabulary.ttl&quot;,
+    &quot;ontologyFormat&quot;: &quot;turtle&quot;,
+    &quot;shapes&quot;: &quot;shapes/my-vocabulary.shacl.ttl&quot;,
+    &quot;shex&quot;: &quot;shex/my-vocabulary.shex&quot;,
+    &quot;spec&quot;: &quot;spec/index.html&quot;,
+    &quot;examples&quot;: [
+      {
+        &quot;key&quot;: &quot;basic&quot;,
+        &quot;label&quot;: &quot;Basic Example&quot;,
+        &quot;path&quot;: &quot;examples/basic.ttl&quot;,
+        &quot;description&quot;: &quot;A minimal valid instance graph.&quot;
+      }
+    ]
+  }
+}</code></pre>
+        <h3>Required integration files</h3>
+        
+    <div class="guide-options-wrap">
+      <table class="guide-options">
+        <thead><tr><th>Option</th><th>Description</th></tr></thead>
+        <tbody><tr><th scope="row"><code>ocg.config.json</code></th><td>Project-specific metadata, source paths, feature switches, graph settings, theme, and curation.</td></tr><tr><th scope="row"><code>package.json + package-lock.json</code></th><td>The OCG package and its locked dependencies.</td></tr><tr><th scope="row"><code>.github/workflows/publish-pages.yml</code></th><td>Builds and deploys site/ from main through GitHub Pages.</td></tr><tr><th scope="row"><code>ocg.config.schema.json</code></th><td>Optional local copy created by ocg init for editor completion.</td></tr></tbody>
+      </table>
+    </div>
+        <div class="guide-callout"><strong>Do not copy OCG internals into the ontology repository.</strong> The installed package owns the generator code and browser assets. The ontology repository owns the config, source files, package manifest, workflow, and generated site.</div>
+      </section>
+
+      <section id="getting-started" class="section guide-section">
+        <div class="section-head"><h2>Getting Started</h2><p class="section-note">The primary workflow adds OCG to an existing ontology repository; forking this repository is an optional alternative.</p></div>
+        <ol class="guide-steps">
+          <li><strong>Keep your existing source layout.</strong> OCG can use ontology, SHACL, ShEx, example, and ReSpec files wherever they already live in the repository.</li>
+          <li><strong>Update the config.</strong> Change project metadata, source paths, feature switches, graph options, theme, landing-page copy, and generator links in <code>ocg.config.json</code>.</li>
+          <li><strong>Build locally.</strong> Run <code>npm run ocg:build</code> to regenerate <code>site/</code> and vendor the Sigma.js/Graphology browser bundles under <code>site/assets/vendor/</code>, then inspect the pages.</li>
+          <li><strong>Publish with GitHub Pages.</strong> Push the ontology repository's <code>main</code> branch. The workflow rebuilds and deploys <code>site/</code> through GitHub Actions.</li>
+        </ol>
+      </section>
+
+      <section id="repository-layout" class="section guide-section">
+        <div class="section-head"><h2>Repository Layout</h2><p class="section-note">OCG support files can sit beside an existing ontology layout; source paths do not need to use source/.</p></div>
+        <pre class="guide-code"><code>.
+├── ocg.config.json
+├── ocg.config.schema.json
+├── package.json             # contains the OCG dependency and scripts
+├── package-lock.json
+├── vocab/                   # existing ontology files
+├── shapes/                  # existing SHACL files
+├── shex/                    # existing ShEx files
+├── examples/                # existing instance data
+├── spec/                    # existing ReSpec source
+└── site/                   # generated, do not edit by hand</code></pre>
+      </section>
+
+      <section id="accepted-input-formats" class="section guide-section">
+        <div class="section-head"><h2>Accepted Input Formats</h2><p class="section-note">OCG currently parses a deliberately small set of RDF serializations for the primary ontology.</p></div>
+        
+    <div class="guide-options-wrap">
+      <table class="guide-options">
+        <thead><tr><th>Option</th><th>Description</th></tr></thead>
+        <tbody><tr><th scope="row"><code>Turtle</code></th><td>Accepted extensions: .ttl and .turtle. Auto-detected as text/turtle.</td></tr><tr><th scope="row"><code>RDF/XML</code></th><td>Accepted extensions: .rdf, .rdfxml, and .owl. Auto-detected as application/rdf+xml.</td></tr><tr><th scope="row"><code>JSON-LD</code></th><td>Accepted extension: .jsonld. Auto-detected as application/ld+json.</td></tr><tr><th scope="row"><code>N-Triples</code></th><td>Accepted extensions: .nt and .ntriples. Auto-detected as application/n-triples.</td></tr><tr><th scope="row"><code>sources.ontologyFormat</code></th><td>Use auto for extension detection or explicitly set turtle, rdfxml, jsonld, or ntriples when needed.</td></tr><tr><th scope="row"><code>Optional source files</code></th><td>SHACL, ShEx, example, and ReSpec files are copied or published as configured. They are not currently parsed into the generated ontology graph.</td></tr></tbody>
+      </table>
+    </div>
+        <div class="guide-callout"><strong>Not currently accepted as primary ontology inputs:</strong> TriG, N-Quads, N3, OWL Functional Syntax, Manchester OWL Syntax, OWL/XML, OBO, arbitrary XML/JSON/YAML, CSV, UML/XMI, JSON Schema, OpenAPI, and Protobuf. OCG rejects these instead of guessing a semantic mapping.</div>
+        <pre class="guide-code"><code>{
+  &quot;sources&quot;: {
+    &quot;ontology&quot;: &quot;source/ontology/my-vocabulary.jsonld&quot;,
+    &quot;ontologyFormat&quot;: &quot;jsonld&quot;
+  }
+}</code></pre>
+      </section>
+
+      <section id="components" class="section guide-section">
+        <div class="section-head"><h2>Companion Site Components</h2><p class="section-note">Use the component-level How To links throughout the site to return directly to these explanations. Each detailed section includes an option table and a complete example.</p></div>
+        <div class="guide-grid">
+          <article id="package-cli-summary" class="guide-card"><div class="term-badge">Developer Workflow</div><h3><a href="#package-cli">Package and CLI</a></h3><p>Install OCG as a development dependency and use the CLI to initialize, validate, build, preview, and clean the companion site.</p><p><strong>Customize:</strong> CLI paths, output directory, local preview host, and the full <code>ocg.config.json</code> surface.</p></article>
+          <article id="home-summary" class="guide-card"><div class="term-badge">Landing Page</div><h3><a href="#home">Home</a></h3><p>The home page presents your project identity, navigation, source artifacts, ontology snapshot, configurable overview cards, featured terms, examples, and the raw artifact viewer.</p><p><strong>Customize:</strong> <code>site.hero</code>, <code>site.resourcePanel</code>, <code>site.overviewCards</code>, <code>site.customSections</code>, and <code>curation.featuredTerms</code>.</p></article>
+          <article id="artifacts-summary" class="guide-card"><div class="term-badge">Source Package</div><h3><a href="#artifacts">Artifacts and Viewer</a></h3><p>OWL Ontology, SHACL, ShEx, specification, examples, and additional configured source files are copied into <code>site/assets/</code>. Config, schema, workflow, and guide files are available as generated links but are not raw-viewer tabs.</p><p><strong>Customize:</strong> <code>sources</code>, <code>features.rawViewer</code>, and <code>curation.viewerTabs</code>.</p></article>
+          <article id="reference-summary" class="guide-card"><div class="term-badge">Generated Page</div><h3><a href="#reference">Vocabulary Reference</a></h3><p>The reference page extracts declared terms from the configured ontology and groups them by class, property, concept, and declared-term type.</p><p><strong>Enable or disable:</strong> <code>features.referencePage</code>.</p></article>
+          <article id="graph-summary" class="guide-card"><div class="term-badge">Interactive Page</div><h3><a href="#graph">Ontology Graph</a></h3><p>The custom Sigma.js graph supports <strong>Predicates as Nodes</strong> or <strong>Predicates as Edges</strong>, plus filters, search, selection, layout, and external-term visibility. WebVOWL can be enabled alongside it.</p><p><strong>Customize:</strong> <code>graph.custom</code>, <code>graph.webvowl</code>, and <code>graph.colors</code>.</p></article>
+          <article id="terms-summary" class="guide-card"><div class="term-badge">Generated Pages</div><h3><a href="#terms">Term Pages</a></h3><p>Every declared ontology term can receive an individual page with its IRI, labels, types, source links, and incoming/outgoing relationships.</p><p><strong>Enable or disable:</strong> <code>features.termPages</code>.</p></article>
+          <article id="specification-summary" class="guide-card"><div class="term-badge">Optional Page</div><h3><a href="#specification">ReSpec Specification</a></h3><p>Place a ReSpec HTML document at <code>sources.spec</code>. OCG publishes it at <code>spec/index.html</code>, injects the companion navigation, and links it from the site.</p><p><strong>Enable or disable:</strong> <code>features.specPage</code>.</p></article>
+          <article id="project-summary" class="guide-card"><div class="term-badge">Site Foundation</div><h3><a href="#project">Project Identity</a></h3><p>Project metadata supplies the shared title, namespace, version, and maintainer information used throughout the site.</p></article>
+          <article id="usage-guide-summary" class="guide-card"><div class="term-badge">Optional Page</div><h3><a href="#usage-guide">Usage Guide</a></h3><p>The in-app guide can be enabled or disabled as a generated page and navigation destination.</p></article>
+          <article id="branding-summary" class="guide-card"><div class="term-badge">Shared Styling</div><h3><a href="#branding">Theme and Footer</a></h3><p>Theme colors, fonts, footer copy, and OCG repository/documentation links are configured here.</p></article>
+        </div>
+      </section>
+
+      
+    <section id="package-cli" class="section guide-section guide-component">
+      <div class="section-head"><div><div class="term-badge">Developer Workflow</div><h2>Package and CLI</h2></div><p class="section-note">Installs OCG into an existing ontology repository and controls initialization, validation, generation, cleanup, and local preview.</p></div>
+      
+    <div class="guide-options-wrap">
+      <table class="guide-options">
+        <thead><tr><th>Option</th><th>Description</th></tr></thead>
+        <tbody><tr><th scope="row"><code>npm install --save-dev ontology-companion-generator</code></th><td>Installs the OCG CLI and its RDF, Sigma.js, and Graphology runtime dependencies.</td></tr><tr><th scope="row"><code>Node.js 24.x</code></th><td>Required runtime for OCG and the generated GitHub Actions workflow.</td></tr><tr><th scope="row"><code>ocg init --ontology path</code></th><td>Creates an initial config, schema, Pages workflow, and npm scripts; namespace and common companion files are inferred when possible.</td></tr><tr><th scope="row"><code>ocg init --force</code></th><td>Replaces the generated ocg.config.json while preserving an existing schema and workflow.</td></tr><tr><th scope="row"><code>ocg check</code></th><td>Validates configuration, source paths, dependency assets, and ontology parsing without writing site output.</td></tr><tr><th scope="row"><code>ocg build</code></th><td>Generates the static site and vendors Sigma.js and Graphology browser bundles into site/assets/vendor/.</td></tr><tr><th scope="row"><code>ocg dev</code></th><td>Builds the site and serves it locally at http://127.0.0.1:4173/.</td></tr><tr><th scope="row"><code>ocg clean</code></th><td>Removes the generated site directory.</td></tr><tr><th scope="row"><code>--config path</code></th><td>Uses an alternate configuration file relative to the repository root.</td></tr><tr><th scope="row"><code>--output path</code></th><td>Writes generated output to an alternate directory instead of site/.</td></tr><tr><th scope="row"><code>--host host / --port port</code></th><td>Changes the host or port used by the local ocg dev server.</td></tr></tbody>
+      </table>
+    </div>
+      <h3>Example</h3>
+      <p class="guide-example-note">This example includes every option described in this component section. Remove optional entries you do not need.</p>
+      <pre class="guide-code"><code>{
+  &quot;scripts&quot;: {
+    &quot;ocg:check&quot;: &quot;ocg check&quot;,
+    &quot;ocg:build&quot;: &quot;ocg build&quot;,
+    &quot;ocg:dev&quot;: &quot;ocg dev&quot;,
+    &quot;ocg:clean&quot;: &quot;ocg clean&quot;
+  },
+  &quot;commands&quot;: [
+    &quot;npm install --save-dev ontology-companion-generator&quot;,
+    &quot;npx ocg init --ontology vocab/my-vocabulary.ttl&quot;,
+    &quot;npm run ocg:check&quot;,
+    &quot;npm run ocg:build&quot;
+  ]
+}</code></pre>
+    </section>
+    <section id="project" class="section guide-section guide-component">
+      <div class="section-head"><div><div class="term-badge">Site Foundation</div><h2>Project Identity</h2></div><p class="section-note">Metadata used by the header, home page, generated titles, term pages, and graph data.</p></div>
+      
+    <div class="guide-options-wrap">
+      <table class="guide-options">
+        <thead><tr><th>Option</th><th>Description</th></tr></thead>
+        <tbody><tr><th scope="row"><code>$schema</code></th><td>Optional editor hint that points ocg.config.json to the bundled JSON Schema.</td></tr><tr><th scope="row"><code>project.title</code></th><td>Full vocabulary name shown in page titles and the site header.</td></tr><tr><th scope="row"><code>project.shortName</code></th><td>Short label used in the brand mark and compact headers.</td></tr><tr><th scope="row"><code>project.slug</code></th><td>Stable project identifier stored in the generated graph metadata.</td></tr><tr><th scope="row"><code>project.description</code></th><td>Default project summary used when page-specific copy is not supplied.</td></tr><tr><th scope="row"><code>project.namespace</code></th><td>Namespace IRI used to identify the vocabulary and copy from the home page.</td></tr><tr><th scope="row"><code>project.canonicalUri</code></th><td>Canonical vocabulary IRI shown in the ontology snapshot.</td></tr><tr><th scope="row"><code>project.version</code></th><td>Optional vocabulary version shown in the ontology snapshot.</td></tr><tr><th scope="row"><code>project.maintainer</code></th><td>Optional maintainer shown in the ontology snapshot.</td></tr></tbody>
+      </table>
+    </div>
+      <h3>Example</h3>
+      <p class="guide-example-note">This example includes every option described in this component section. Remove optional entries you do not need.</p>
+      <pre class="guide-code"><code>{
+  &quot;title&quot;: &quot;Your Vocabulary&quot;,
+  &quot;shortName&quot;: &quot;YV&quot;,
+  &quot;slug&quot;: &quot;your-vocabulary&quot;,
+  &quot;description&quot;: &quot;What this vocabulary describes.&quot;,
+  &quot;namespace&quot;: &quot;https://example.org/vocab#&quot;,
+  &quot;canonicalUri&quot;: &quot;https://example.org/vocab&quot;,
+  &quot;version&quot;: &quot;1.0.0&quot;,
+  &quot;maintainer&quot;: &quot;Vocabulary Team&quot;
+}</code></pre>
+    </section>
+    <section id="home" class="section guide-section guide-component">
+      <div class="section-head"><div><div class="term-badge">Landing Page</div><h2>Home</h2></div><p class="section-note">Controls the landing-page copy, cards, featured terms, and custom narrative content.</p></div>
+      
+    <div class="guide-options-wrap">
+      <table class="guide-options">
+        <thead><tr><th>Option</th><th>Description</th></tr></thead>
+        <tbody><tr><th scope="row"><code>features.overviewCards</code></th><td>Set to false to hide the configurable overview-card row.</td></tr><tr><th scope="row"><code>site.hero.kicker</code></th><td>Small eyebrow text above the home-page headline.</td></tr><tr><th scope="row"><code>site.hero.headline</code></th><td>Main home-page headline; falls back to project.title when empty.</td></tr><tr><th scope="row"><code>site.hero.body</code></th><td>Introductory home-page paragraph; falls back to project.description when empty.</td></tr><tr><th scope="row"><code>site.resourcePanel.title</code></th><td>Heading for the published-artifacts panel.</td></tr><tr><th scope="row"><code>site.resourcePanel.body</code></th><td>Supporting text for the published-artifacts panel.</td></tr><tr><th scope="row"><code>site.overviewCards[].title</code></th><td>Heading for a configurable home-page card.</td></tr><tr><th scope="row"><code>site.overviewCards[].body</code></th><td>Description shown inside a configurable home-page card.</td></tr><tr><th scope="row"><code>site.overviewCards[].linkText</code></th><td>Optional label for the card link.</td></tr><tr><th scope="row"><code>site.overviewCards[].linkHref</code></th><td>Optional relative or absolute destination for the card link.</td></tr><tr><th scope="row"><code>site.customSections[].title</code></th><td>Heading for an additional home-page section.</td></tr><tr><th scope="row"><code>site.customSections[].body</code></th><td>Paragraph displayed in an additional home-page section.</td></tr><tr><th scope="row"><code>site.customSections[].items</code></th><td>Optional list of supporting points displayed in that section.</td></tr><tr><th scope="row"><code>curation.featuredTerms</code></th><td>Optional array of ontology qnames to feature on the home page. When empty, OCG selects terms automatically.</td></tr><tr><th scope="row"><code>curation.autoFeaturedTerms</code></th><td>Set to false to hide automatic featured terms when no explicit featuredTerms are configured.</td></tr><tr><th scope="row"><code>curation.featuredTermLimit</code></th><td>Maximum number of terms selected automatically when featuredTerms is empty.</td></tr></tbody>
+      </table>
+    </div>
+      <h3>Example</h3>
+      <p class="guide-example-note">This example includes every option described in this component section. Remove optional entries you do not need.</p>
+      <pre class="guide-code"><code>{
+  &quot;features&quot;: {
+    &quot;overviewCards&quot;: true
+  },
+  &quot;site&quot;: {
+    &quot;hero&quot;: {
+      &quot;kicker&quot;: &quot;Forkable Vocabulary Template&quot;,
+      &quot;headline&quot;: &quot;Explore Your Vocabulary&quot;,
+      &quot;body&quot;: &quot;A short introduction shown on the home page.&quot;
+    },
+    &quot;resourcePanel&quot;: {
+      &quot;title&quot;: &quot;Published Artifacts&quot;,
+      &quot;body&quot;: &quot;A short explanation shown above the artifact links.&quot;
+    },
+    &quot;overviewCards&quot;: [
+      {
+        &quot;title&quot;: &quot;Card Title&quot;,
+        &quot;body&quot;: &quot;Card text shown on the home page.&quot;,
+        &quot;linkText&quot;: &quot;Learn More&quot;,
+        &quot;linkHref&quot;: &quot;usage-guide.html#home&quot;
+      }
+    ],
+    &quot;customSections&quot;: [
+      {
+        &quot;title&quot;: &quot;Additional Context&quot;,
+        &quot;body&quot;: &quot;A custom narrative section for domain-specific guidance.&quot;,
+        &quot;items&quot;: [
+          &quot;A supporting point&quot;,
+          &quot;Another supporting point&quot;
+        ]
+      }
+    ]
+  },
+  &quot;curation&quot;: {
+    &quot;featuredTerms&quot;: [
+      &quot;yv:ImportantClass&quot;,
+      &quot;yv:importantProperty&quot;
+    ]
+  }
+}</code></pre>
+    </section>
+    <section id="artifacts" class="section guide-section guide-component">
+      <div class="section-head"><div><div class="term-badge">Source Package</div><h2>Artifacts and Viewer</h2></div><p class="section-note">Publishes configured source files into site/assets/ and controls which files appear in the raw artifact viewer. OCG does not scan arbitrary directories. Primary ontology support is limited to Turtle, RDF/XML, JSON-LD, and N-Triples; other ontology syntaxes are rejected.</p></div>
+      
+    <div class="guide-options-wrap">
+      <table class="guide-options">
+        <thead><tr><th>Option</th><th>Description</th></tr></thead>
+        <tbody><tr><th scope="row"><code>sources.ontology</code></th><td>Required path to the primary OWL/RDF ontology source.</td></tr><tr><th scope="row"><code>sources.ontologyFormat</code></th><td>Format override: auto, turtle, rdfxml, jsonld, or ntriples. Auto uses the file extension; use an override for ambiguous extensions. TriG, N-Quads, N3, OWL Functional/Manchester/XML, OBO, arbitrary JSON/XML/YAML, CSV, and schema formats are not accepted.</td></tr><tr><th scope="row"><code>sources.shapes</code></th><td>Optional path to a SHACL shapes file.</td></tr><tr><th scope="row"><code>sources.shex</code></th><td>Optional path to a ShEx schema file.</td></tr><tr><th scope="row"><code>sources.spec</code></th><td>Optional source document for the ReSpec Specification page; it is also copied as a viewer artifact.</td></tr><tr><th scope="row"><code>sources.examples[].key</code></th><td>Stable key used by viewerTabs to select an example.</td></tr><tr><th scope="row"><code>sources.examples[].label</code></th><td>Human-readable example label shown in the artifact list and viewer.</td></tr><tr><th scope="row"><code>sources.examples[].path</code></th><td>Path to the example RDF or data file.</td></tr><tr><th scope="row"><code>sources.examples[].description</code></th><td>Optional explanation shown with the example artifact.</td></tr><tr><th scope="row"><code>sources.artifacts[].key</code></th><td>Stable key used as artifact:&lt;key&gt; in viewerTabs.</td></tr><tr><th scope="row"><code>sources.artifacts[].label</code></th><td>Human-readable label shown in the artifact viewer.</td></tr><tr><th scope="row"><code>sources.artifacts[].path</code></th><td>Path to any additional source file to copy into site/assets/.</td></tr><tr><th scope="row"><code>sources.artifacts[].description</code></th><td>Optional explanation shown with the additional artifact.</td></tr><tr><th scope="row"><code>sources.artifacts[].destinationName</code></th><td>Optional filename for the copied artifact; defaults to the source filename.</td></tr><tr><th scope="row"><code>features.rawViewer</code></th><td>Set to false to remove the raw artifact viewer from the home page.</td></tr><tr><th scope="row"><code>features.hierarchyAsset</code></th><td>Set to false to omit the generated ontology_hierarchy.ttl asset.</td></tr><tr><th scope="row"><code>curation.viewerTabs</code></th><td>Ordered source-asset keys to show in the raw viewer. Leave empty to show all source assets, or list keys such as ontology or artifact:context to curate the tabs. Config, schema, workflow, and guide assets are not viewer tabs.</td></tr></tbody>
+      </table>
+    </div>
+      <h3>Example</h3>
+      <p class="guide-example-note">This example includes every option described in this component section. Remove optional entries you do not need.</p>
+      <pre class="guide-code"><code>{
+  &quot;sources&quot;: {
+    &quot;ontology&quot;: &quot;source/ontology/your-vocabulary.ttl&quot;,
+    &quot;shapes&quot;: &quot;source/shapes/your-vocabulary.shacl.ttl&quot;,
+    &quot;shex&quot;: &quot;source/shex/your-vocabulary.shex&quot;,
+    &quot;spec&quot;: &quot;source/spec/index.html&quot;,
+    &quot;artifacts&quot;: [
+      {
+        &quot;key&quot;: &quot;context&quot;,
+        &quot;label&quot;: &quot;Context JSON&quot;,
+        &quot;path&quot;: &quot;source/context.json&quot;,
+        &quot;description&quot;: &quot;Additional source documentation or metadata.&quot;,
+        &quot;destinationName&quot;: &quot;context.json&quot;
+      }
+    ],
+    &quot;examples&quot;: [
+      {
+        &quot;key&quot;: &quot;basic&quot;,
+        &quot;label&quot;: &quot;Basic Example&quot;,
+        &quot;path&quot;: &quot;source/examples/basic.ttl&quot;,
+        &quot;description&quot;: &quot;A small valid instance graph.&quot;
+      }
+    ]
+  },
+  &quot;features&quot;: {
+    &quot;rawViewer&quot;: true,
+    &quot;hierarchyAsset&quot;: true
+  },
+  &quot;curation&quot;: {
+    &quot;viewerTabs&quot;: []
+  }
+}</code></pre>
+    </section>
+    <section id="reference" class="section guide-section guide-component">
+      <div class="section-head"><div><div class="term-badge">Generated Page</div><h2>Vocabulary Reference</h2></div><p class="section-note">Generates a browsable reference page from terms declared in the configured ontology, with an optional curated hierarchy overview above the Classes section.</p></div>
+      
+    <div class="guide-options-wrap">
+      <table class="guide-options">
+        <thead><tr><th>Option</th><th>Description</th></tr></thead>
+        <tbody><tr><th scope="row"><code>features.referencePage</code></th><td>Set to false to omit ontology-reference.html and its navigation link.</td></tr><tr><th scope="row"><code>features.hierarchyOverview</code></th><td>Set to true to show the generated hierarchy summary above the Classes section.</td></tr><tr><th scope="row"><code>hierarchy.title</code></th><td>Heading for the hierarchy overview.</td></tr><tr><th scope="row"><code>hierarchy.description</code></th><td>Supporting explanation shown below the hierarchy heading.</td></tr><tr><th scope="row"><code>hierarchy.termTypes</code></th><td>Term types eligible for hierarchy branches. Defaults to class and concept; objectProperty, datatypeProperty, annotationProperty, and declaredTerm can be added when useful.</td></tr><tr><th scope="row"><code>hierarchy.relations</code></th><td>Hierarchy predicates to follow: subClassOf and/or broader.</td></tr><tr><th scope="row"><code>hierarchy.rootTerms</code></th><td>Optional qnames, IRIs, or local names to use as the major roots. Empty means OCG infers roots.</td></tr><tr><th scope="row"><code>hierarchy.maxRoots</code></th><td>Maximum number of major branches shown.</td></tr><tr><th scope="row"><code>hierarchy.maxDepth</code></th><td>Maximum number of levels below each root.</td></tr><tr><th scope="row"><code>hierarchy.maxChildrenPerNode</code></th><td>Maximum representative child terms shown for each branch.</td></tr><tr><th scope="row"><code>hierarchy.maxNodes</code></th><td>Global cap on terms shown in the overview.</td></tr><tr><th scope="row"><code>hierarchy.includeLeafTerms</code></th><td>Whether leaf terms are retained. Set false to emphasize only branching structure.</td></tr><tr><th scope="row"><code>hierarchy.includeExternal</code></th><td>Whether external hierarchy terms may appear in the tree.</td></tr><tr><th scope="row"><code>hierarchy.includePropertyRelations</code></th><td>Whether a capped list of important domain/range links is shown beside the tree.</td></tr><tr><th scope="row"><code>hierarchy.propertyRelations</code></th><td>Property relationship types to summarize: domain and/or range.</td></tr><tr><th scope="row"><code>hierarchy.maxPropertyRelations</code></th><td>Maximum number of structural links shown beside the tree.</td></tr><tr><th scope="row"><code>hierarchy.labelMode</code></th><td>Term display: label, qname, or label-and-qname.</td></tr></tbody>
+      </table>
+    </div>
+      <h3>Example</h3>
+      <p class="guide-example-note">This example includes every option described in this component section. Remove optional entries you do not need.</p>
+      <pre class="guide-code"><code>{
+  &quot;features&quot;: {
+    &quot;referencePage&quot;: true,
+    &quot;hierarchyOverview&quot;: true
+  },
+  &quot;hierarchy&quot;: {
+    &quot;title&quot;: &quot;Ontology Structure&quot;,
+    &quot;description&quot;: &quot;A curated overview of the main class and concept relationships.&quot;,
+    &quot;termTypes&quot;: [
+      &quot;class&quot;,
+      &quot;concept&quot;
+    ],
+    &quot;relations&quot;: [
+      &quot;subClassOf&quot;,
+      &quot;broader&quot;
+    ],
+    &quot;rootTerms&quot;: [],
+    &quot;maxRoots&quot;: 6,
+    &quot;maxDepth&quot;: 3,
+    &quot;maxChildrenPerNode&quot;: 6,
+    &quot;maxNodes&quot;: 36,
+    &quot;includeLeafTerms&quot;: true,
+    &quot;includeExternal&quot;: false,
+    &quot;includePropertyRelations&quot;: true,
+    &quot;propertyRelations&quot;: [
+      &quot;domain&quot;,
+      &quot;range&quot;
+    ],
+    &quot;maxPropertyRelations&quot;: 12,
+    &quot;labelMode&quot;: &quot;label-and-qname&quot;
+  }
+}</code></pre>
+    </section>
+    <section id="graph" class="section guide-section guide-component">
+      <div class="section-head"><div><div class="term-badge">Interactive Page</div><h2>Ontology Graph</h2></div><p class="section-note">Configures the Sigma.js graph, its two predicate modes, WebVOWL, graph colors, and ontology-generated interaction behavior including hover, forgiving edge hit areas, selection, deselection, and dragging.</p></div>
+      
+    <div class="guide-options-wrap">
+      <table class="guide-options">
+        <thead><tr><th>Option</th><th>Description</th></tr></thead>
+        <tbody><tr><th scope="row"><code>features.graphPage</code></th><td>Set to false to omit ontology-graph.html and its navigation link.</td></tr><tr><th scope="row"><code>graph.defaultView</code></th><td>Initial representation: custom or webvowl. The selected representation must be enabled.</td></tr><tr><th scope="row"><code>graph.custom.enabled</code></th><td>Enables the generated Sigma.js graph.</td></tr><tr><th scope="row"><code>graph.custom.defaultMode</code></th><td>Initial custom mode: predicate-nodes or predicate-edges.</td></tr><tr><th scope="row"><code>graph.custom.modes.predicateNodes</code></th><td>Enables predicates as visible nodes, matching the VORD-style representation.</td></tr><tr><th scope="row"><code>graph.custom.modes.predicateEdges</code></th><td>Enables predicates as labeled edges between domain and range nodes.</td></tr><tr><th scope="row"><code>graph.webvowl.enabled</code></th><td>Enables the WebVOWL representation toggle.</td></tr><tr><th scope="row"><code>graph.webvowl.serviceUrl</code></th><td>WebVOWL service URL loaded by the graph iframe.</td></tr><tr><th scope="row"><code>graph.webvowl.ontologyUrl</code></th><td>Optional public URL of the serialized ontology document; leave empty to derive the deployed asset URL. Do not use project.namespace or a URL ending in #.</td></tr><tr><th scope="row"><code>graph.webvowl.height</code></th><td>Iframe height in pixels; minimum value is 320.</td></tr><tr><th scope="row"><code>graph.colors.class</code></th><td>Fill color for class nodes.</td></tr><tr><th scope="row"><code>graph.colors.objectProperty</code></th><td>Fill color for object-property nodes.</td></tr><tr><th scope="row"><code>graph.colors.datatypeProperty</code></th><td>Fill color for datatype-property nodes.</td></tr><tr><th scope="row"><code>graph.colors.annotationProperty</code></th><td>Fill color for annotation-property nodes.</td></tr><tr><th scope="row"><code>graph.colors.concept</code></th><td>Fill color for SKOS concept nodes.</td></tr><tr><th scope="row"><code>graph.colors.declaredTerm</code></th><td>Fill color for other declared-term nodes.</td></tr><tr><th scope="row"><code>graph.colors.external</code></th><td>Fill color for external reference nodes.</td></tr><tr><th scope="row"><code>graph.colors.subClassOf</code></th><td>Edge color for subclass relationships.</td></tr><tr><th scope="row"><code>graph.colors.domain</code></th><td>Edge color for domain relationships.</td></tr><tr><th scope="row"><code>graph.colors.range</code></th><td>Edge color for range relationships.</td></tr><tr><th scope="row"><code>graph.colors.broader</code></th><td>Edge color for broader/concept hierarchy relationships.</td></tr></tbody>
+      </table>
+    </div>
+      <h3>Example</h3>
+      <p class="guide-example-note">This example includes every option described in this component section. Remove optional entries you do not need.</p>
+      <pre class="guide-code"><code>{
+  &quot;defaultView&quot;: &quot;custom&quot;,
+  &quot;custom&quot;: {
+    &quot;enabled&quot;: true,
+    &quot;defaultMode&quot;: &quot;predicate-nodes&quot;,
+    &quot;modes&quot;: {
+      &quot;predicateNodes&quot;: true,
+      &quot;predicateEdges&quot;: true
+    }
+  },
+  &quot;webvowl&quot;: {
+    &quot;enabled&quot;: true,
+    &quot;serviceUrl&quot;: &quot;https://service.tib.eu/webvowl/&quot;,
+    &quot;ontologyUrl&quot;: &quot;&quot;,
+    &quot;height&quot;: 760
+  },
+  &quot;colors&quot;: {
+    &quot;class&quot;: &quot;#b7dcf6&quot;,
+    &quot;objectProperty&quot;: &quot;#bee7c3&quot;,
+    &quot;datatypeProperty&quot;: &quot;#f7d7ab&quot;,
+    &quot;annotationProperty&quot;: &quot;#f2c8cf&quot;,
+    &quot;concept&quot;: &quot;#d3c5f6&quot;,
+    &quot;declaredTerm&quot;: &quot;#e1e8ef&quot;,
+    &quot;external&quot;: &quot;#dfe6ee&quot;,
+    &quot;subClassOf&quot;: &quot;#1f6f92&quot;,
+    &quot;domain&quot;: &quot;#2f8040&quot;,
+    &quot;range&quot;: &quot;#ab6b22&quot;,
+    &quot;broader&quot;: &quot;#7b5ca7&quot;
+  }
+}</code></pre>
+    </section>
+    <section id="terms" class="section guide-section guide-component">
+      <div class="section-head"><div><div class="term-badge">Generated Pages</div><h2>Term Pages</h2></div><p class="section-note">Creates one HTML page for each declared ontology term, with relationships and source links.</p></div>
+      
+    <div class="guide-options-wrap">
+      <table class="guide-options">
+        <thead><tr><th>Option</th><th>Description</th></tr></thead>
+        <tbody><tr><th scope="row"><code>features.termPages</code></th><td>Set to false to omit the terms directory and its navigation link.</td></tr></tbody>
+      </table>
+    </div>
+      <h3>Example</h3>
+      <p class="guide-example-note">This example includes every option described in this component section. Remove optional entries you do not need.</p>
+      <pre class="guide-code"><code>{
+  &quot;features&quot;: {
+    &quot;termPages&quot;: true
+  }
+}</code></pre>
+    </section>
+    <section id="specification" class="section guide-section guide-component">
+      <div class="section-head"><div><div class="term-badge">Optional Page</div><h2>ReSpec Specification</h2></div><p class="section-note">Publishes a source ReSpec document as a first-class companion page with injected navigation.</p></div>
+      
+    <div class="guide-options-wrap">
+      <table class="guide-options">
+        <thead><tr><th>Option</th><th>Description</th></tr></thead>
+        <tbody><tr><th scope="row"><code>features.specPage</code></th><td>Set to true to generate spec/index.html and its navigation link.</td></tr><tr><th scope="row"><code>sources.spec</code></th><td>Path to the ReSpec HTML source; required when specPage is enabled.</td></tr></tbody>
+      </table>
+    </div>
+      <h3>Example</h3>
+      <p class="guide-example-note">This example includes every option described in this component section. Remove optional entries you do not need.</p>
+      <pre class="guide-code"><code>{
+  &quot;sources&quot;: {
+    &quot;spec&quot;: &quot;source/spec/index.html&quot;
+  },
+  &quot;features&quot;: {
+    &quot;specPage&quot;: true
+  }
+}</code></pre>
+    </section>
+    <section id="usage-guide" class="section guide-section guide-component">
+      <div class="section-head"><div><div class="term-badge">Optional Page</div><h2>Usage Guide</h2></div><p class="section-note">Generates this in-app configuration and workflow guide with component-specific How To links.</p></div>
+      
+    <div class="guide-options-wrap">
+      <table class="guide-options">
+        <thead><tr><th>Option</th><th>Description</th></tr></thead>
+        <tbody><tr><th scope="row"><code>features.usageGuidePage</code></th><td>Set to false to omit usage-guide.html, its navigation link, and all How To links.</td></tr></tbody>
+      </table>
+    </div>
+      <h3>Example</h3>
+      <p class="guide-example-note">This example includes every option described in this component section. Remove optional entries you do not need.</p>
+      <pre class="guide-code"><code>{
+  &quot;features&quot;: {
+    &quot;usageGuidePage&quot;: true
+  }
+}</code></pre>
+    </section>
+    <section id="branding" class="section guide-section guide-component">
+      <div class="section-head"><div><div class="term-badge">Shared Styling</div><h2>Theme, Footer, and Generator Links</h2></div><p class="section-note">Applies site-wide fonts, colors, footer copy, and OCG attribution links.</p></div>
+      
+    <div class="guide-options-wrap">
+      <table class="guide-options">
+        <thead><tr><th>Option</th><th>Description</th></tr></thead>
+        <tbody><tr><th scope="row"><code>site.basePath</code></th><td>Deployment base-path setting retained for repository configuration; generated links are currently relative.</td></tr><tr><th scope="row"><code>theme.fonts.heading</code></th><td>Font family for headings and brand text.</td></tr><tr><th scope="row"><code>theme.fonts.body</code></th><td>Font family for body copy and interface text.</td></tr><tr><th scope="row"><code>theme.fonts.mono</code></th><td>Font family for code, IRIs, and source content.</td></tr><tr><th scope="row"><code>theme.colors.pageBackground</code></th><td>Main page background color.</td></tr><tr><th scope="row"><code>theme.colors.pageBackgroundAlt</code></th><td>Secondary page background color used by the layered background.</td></tr><tr><th scope="row"><code>theme.colors.panelBackground</code></th><td>Base panel background color.</td></tr><tr><th scope="row"><code>theme.colors.cardBackground</code></th><td>Base card background color.</td></tr><tr><th scope="row"><code>theme.colors.text</code></th><td>Primary text and heading color.</td></tr><tr><th scope="row"><code>theme.colors.mutedText</code></th><td>Secondary text color.</td></tr><tr><th scope="row"><code>theme.colors.accent</code></th><td>Primary link and accent color.</td></tr><tr><th scope="row"><code>theme.colors.accentStrong</code></th><td>Strong accent color for active and emphasized controls.</td></tr><tr><th scope="row"><code>theme.colors.border</code></th><td>Shared border color.</td></tr><tr><th scope="row"><code>site.footer.primary</code></th><td>Primary footer sentence.</td></tr><tr><th scope="row"><code>site.footer.secondary</code></th><td>Secondary footer sentence.</td></tr><tr><th scope="row"><code>site.generator.repositoryUrl</code></th><td>Optional link to the OCG repository in the generated footer.</td></tr><tr><th scope="row"><code>site.generator.documentationUrl</code></th><td>Optional link to OCG documentation in the generated footer.</td></tr></tbody>
+      </table>
+    </div>
+      <h3>Example</h3>
+      <p class="guide-example-note">This example includes every option described in this component section. Remove optional entries you do not need.</p>
+      <pre class="guide-code"><code>{
+  &quot;site&quot;: {
+    &quot;basePath&quot;: &quot;/&quot;,
+    &quot;footer&quot;: {
+      &quot;primary&quot;: &quot;Your vocabulary companion site.&quot;,
+      &quot;secondary&quot;: &quot;Maintained by the Vocabulary Team.&quot;
+    },
+    &quot;generator&quot;: {
+      &quot;repositoryUrl&quot;: &quot;https://github.com/ecrum19/ocg&quot;,
+      &quot;documentationUrl&quot;: &quot;https://github.com/ecrum19/ocg#readme&quot;
+    }
+  },
+  &quot;theme&quot;: {
+    &quot;fonts&quot;: {
+      &quot;heading&quot;: &quot;Space Grotesk&quot;,
+      &quot;body&quot;: &quot;IBM Plex Sans&quot;,
+      &quot;mono&quot;: &quot;IBM Plex Mono&quot;
+    },
+    &quot;colors&quot;: {
+      &quot;pageBackground&quot;: &quot;#f6f1ea&quot;,
+      &quot;pageBackgroundAlt&quot;: &quot;#edf3f7&quot;,
+      &quot;panelBackground&quot;: &quot;#ffffff&quot;,
+      &quot;cardBackground&quot;: &quot;#ffffff&quot;,
+      &quot;text&quot;: &quot;#1d1f22&quot;,
+      &quot;mutedText&quot;: &quot;#5f6b7a&quot;,
+      &quot;accent&quot;: &quot;#1f6f78&quot;,
+      &quot;accentStrong&quot;: &quot;#13535a&quot;,
+      &quot;border&quot;: &quot;#d6dee6&quot;
+    }
+  }
+}</code></pre>
+    </section>
+
+      <section id="configuration" class="section guide-section">
+        <div class="section-head"><h2>Complete Configuration Example</h2><p class="section-note">The config is the primary customization surface. The schema file provides editor validation.</p></div>
+        <pre class="guide-code"><code>{
+  &quot;$schema&quot;: &quot;./ocg.config.schema.json&quot;,
+  &quot;project&quot;: {
+    &quot;title&quot;: &quot;Your Vocabulary&quot;,
+    &quot;shortName&quot;: &quot;YV&quot;,
+    &quot;slug&quot;: &quot;your-vocabulary&quot;,
+    &quot;description&quot;: &quot;What this vocabulary describes.&quot;,
+    &quot;namespace&quot;: &quot;https://example.org/vocab#&quot;,
+    &quot;canonicalUri&quot;: &quot;https://example.org/vocab&quot;,
+    &quot;version&quot;: &quot;1.0.0&quot;,
+    &quot;maintainer&quot;: &quot;Vocabulary Team&quot;
+  },
+  &quot;sources&quot;: {
+    &quot;ontology&quot;: &quot;source/ontology/your-vocabulary.ttl&quot;,
+    &quot;ontologyFormat&quot;: &quot;auto&quot;,
+    &quot;shapes&quot;: &quot;source/shapes/your-vocabulary.shacl.ttl&quot;,
+    &quot;shex&quot;: &quot;source/shex/your-vocabulary.shex&quot;,
+    &quot;spec&quot;: &quot;source/spec/index.html&quot;,
+    &quot;examples&quot;: [
+      {
+        &quot;key&quot;: &quot;basic&quot;,
+        &quot;label&quot;: &quot;Basic Example&quot;,
+        &quot;path&quot;: &quot;source/examples/basic.ttl&quot;,
+        &quot;description&quot;: &quot;A small valid instance graph.&quot;
+      }
+    ],
+    &quot;artifacts&quot;: [
+      {
+        &quot;key&quot;: &quot;context&quot;,
+        &quot;label&quot;: &quot;Context JSON&quot;,
+        &quot;path&quot;: &quot;source/context.json&quot;,
+        &quot;description&quot;: &quot;Additional source documentation or metadata.&quot;,
+        &quot;destinationName&quot;: &quot;context.json&quot;
+      }
+    ]
+  },
+  &quot;features&quot;: {
+    &quot;referencePage&quot;: true,
+    &quot;graphPage&quot;: true,
+    &quot;termPages&quot;: true,
+    &quot;rawViewer&quot;: true,
+    &quot;overviewCards&quot;: true,
+    &quot;hierarchyAsset&quot;: true,
+    &quot;hierarchyOverview&quot;: true,
+    &quot;specPage&quot;: true,
+    &quot;usageGuidePage&quot;: true
+  },
+  &quot;hierarchy&quot;: {
+    &quot;title&quot;: &quot;Ontology Structure&quot;,
+    &quot;description&quot;: &quot;A curated overview of the main class and concept relationships.&quot;,
+    &quot;termTypes&quot;: [
+      &quot;class&quot;,
+      &quot;concept&quot;
+    ],
+    &quot;relations&quot;: [
+      &quot;subClassOf&quot;,
+      &quot;broader&quot;
+    ],
+    &quot;rootTerms&quot;: [],
+    &quot;maxRoots&quot;: 6,
+    &quot;maxDepth&quot;: 3,
+    &quot;maxChildrenPerNode&quot;: 6,
+    &quot;maxNodes&quot;: 36,
+    &quot;includeLeafTerms&quot;: true,
+    &quot;includeExternal&quot;: false,
+    &quot;includePropertyRelations&quot;: true,
+    &quot;propertyRelations&quot;: [
+      &quot;domain&quot;,
+      &quot;range&quot;
+    ],
+    &quot;maxPropertyRelations&quot;: 12,
+    &quot;labelMode&quot;: &quot;label-and-qname&quot;
+  },
+  &quot;graph&quot;: {
+    &quot;defaultView&quot;: &quot;custom&quot;,
+    &quot;custom&quot;: {
+      &quot;enabled&quot;: true,
+      &quot;defaultMode&quot;: &quot;predicate-nodes&quot;,
+      &quot;modes&quot;: {
+        &quot;predicateNodes&quot;: true,
+        &quot;predicateEdges&quot;: true
+      }
+    },
+    &quot;webvowl&quot;: {
+      &quot;enabled&quot;: true,
+      &quot;serviceUrl&quot;: &quot;https://service.tib.eu/webvowl/&quot;,
+      &quot;ontologyUrl&quot;: &quot;&quot;,
+      &quot;height&quot;: 760
+    },
+    &quot;colors&quot;: {
+      &quot;class&quot;: &quot;#b7dcf6&quot;,
+      &quot;objectProperty&quot;: &quot;#bee7c3&quot;,
+      &quot;datatypeProperty&quot;: &quot;#f7d7ab&quot;,
+      &quot;annotationProperty&quot;: &quot;#f2c8cf&quot;,
+      &quot;concept&quot;: &quot;#d3c5f6&quot;,
+      &quot;declaredTerm&quot;: &quot;#e1e8ef&quot;,
+      &quot;external&quot;: &quot;#dfe6ee&quot;,
+      &quot;subClassOf&quot;: &quot;#1f6f92&quot;,
+      &quot;domain&quot;: &quot;#2f8040&quot;,
+      &quot;range&quot;: &quot;#ab6b22&quot;,
+      &quot;broader&quot;: &quot;#7b5ca7&quot;
+    }
+  },
+  &quot;theme&quot;: {
+    &quot;fonts&quot;: {
+      &quot;heading&quot;: &quot;Space Grotesk&quot;,
+      &quot;body&quot;: &quot;IBM Plex Sans&quot;,
+      &quot;mono&quot;: &quot;IBM Plex Mono&quot;
+    },
+    &quot;colors&quot;: {
+      &quot;pageBackground&quot;: &quot;#f6f1ea&quot;,
+      &quot;pageBackgroundAlt&quot;: &quot;#edf3f7&quot;,
+      &quot;panelBackground&quot;: &quot;#ffffff&quot;,
+      &quot;cardBackground&quot;: &quot;#ffffff&quot;,
+      &quot;text&quot;: &quot;#1d1f22&quot;,
+      &quot;mutedText&quot;: &quot;#5f6b7a&quot;,
+      &quot;accent&quot;: &quot;#1f6f78&quot;,
+      &quot;accentStrong&quot;: &quot;#13535a&quot;,
+      &quot;border&quot;: &quot;#d6dee6&quot;
+    }
+  },
+  &quot;site&quot;: {
+    &quot;basePath&quot;: &quot;/&quot;,
+    &quot;hero&quot;: {
+      &quot;kicker&quot;: &quot;Forkable Vocabulary Template&quot;,
+      &quot;headline&quot;: &quot;Explore Your Vocabulary&quot;,
+      &quot;body&quot;: &quot;A short introduction shown on the home page.&quot;
+    },
+    &quot;resourcePanel&quot;: {
+      &quot;title&quot;: &quot;Published Artifacts&quot;,
+      &quot;body&quot;: &quot;A short explanation shown above the artifact links.&quot;
+    },
+    &quot;overviewCards&quot;: [
+      {
+        &quot;title&quot;: &quot;Card Title&quot;,
+        &quot;body&quot;: &quot;Card text shown on the home page.&quot;,
+        &quot;linkText&quot;: &quot;Learn More&quot;,
+        &quot;linkHref&quot;: &quot;usage-guide.html#home&quot;
+      }
+    ],
+    &quot;customSections&quot;: [
+      {
+        &quot;title&quot;: &quot;Additional Context&quot;,
+        &quot;body&quot;: &quot;A custom narrative section for domain-specific guidance.&quot;,
+        &quot;items&quot;: [
+          &quot;A supporting point&quot;,
+          &quot;Another supporting point&quot;
+        ]
+      }
+    ],
+    &quot;footer&quot;: {
+      &quot;primary&quot;: &quot;Your vocabulary companion site.&quot;,
+      &quot;secondary&quot;: &quot;Maintained by the Vocabulary Team.&quot;
+    },
+    &quot;generator&quot;: {
+      &quot;repositoryUrl&quot;: &quot;https://github.com/ecrum19/ocg&quot;,
+      &quot;documentationUrl&quot;: &quot;https://github.com/ecrum19/ocg#readme&quot;
+    }
+  },
+  &quot;curation&quot;: {
+    &quot;featuredTerms&quot;: [
+      &quot;yv:ImportantClass&quot;,
+      &quot;yv:importantProperty&quot;
+    ],
+    &quot;autoFeaturedTerms&quot;: true,
+    &quot;featuredTermLimit&quot;: 6,
+    &quot;viewerTabs&quot;: []
+  }
+}</code></pre>
+      </section>
+
+      <section id="github-pages" class="section guide-section">
+        <div class="section-head"><h2>GitHub Pages Deployment</h2><p class="section-note">The included workflow builds the ontology repository on pushes to <code>main</code> and deploys the generated <code>site/</code> directory.</p></div>
+        <div class="guide-callout"><strong>Required repository setting:</strong> in GitHub, open Settings → Pages and select GitHub Actions as the deployment source. The workflow intentionally deploys only <code>main</code> so feature branches cannot overwrite the live site.</div>
+        <p>GitHub Pages does not dynamically follow the branch currently selected in the GitHub file browser. Deploying every branch would send each build to the same Pages site, with the latest deployment replacing the previous one. Build and test feature branches locally or with build-only CI, then merge to <code>main</code> for publication.</p>
+      </section>
+
+      <section id="commands" class="section guide-section">
+        <div class="section-head"><h2>Useful Commands</h2><p class="section-note">Run these from the repository root.</p></div>
+        <pre class="guide-code"><code>npm install --save-dev ontology-companion-generator
+npx ocg init --ontology vocab/my-vocabulary.ttl
+npm run ocg:check   # validate config and parse ontology
+npm run ocg:build   # generate site/
+npm run ocg:dev     # preview at http://127.0.0.1:4173/
+npm run ocg:clean   # remove generated site/</code></pre>
+      </section>
+    </main>
+    <footer class="site-footer"><div>VoRD ontology sources and companion documentation.</div><div>The generated site is built from the repository&#39;s canonical source files.</div></footer>
+    <footer class="site-footer-generator">
+      <span>Generated with <strong>OCG</strong> v1.2.0</span><span class="site-footer-separator" aria-hidden="true">|</span><a class="ocg-footer-repository" href="https://github.com/ecrum19/ocg" target="_blank" rel="noreferrer"><img class="ocg-footer-icon" src="ocg-favicon.png" alt="" width="18" height="18" aria-hidden="true" /><span>OCG repository</span></a><span class="site-footer-separator" aria-hidden="true">|</span><a href="https://github.com/ecrum19/ocg#readme" target="_blank" rel="noreferrer">Documentation</a>
+    </footer>
+  </div>
+</body>
+</html>

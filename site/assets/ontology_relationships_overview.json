@@ -1,0 +1,45 @@
+{
+  "generatedAt": "2026-08-21T11:16:11.063Z",
+  "termCounts": [
+    {
+      "type": "class",
+      "label": "Class",
+      "count": 12
+    },
+    {
+      "type": "objectProperty",
+      "label": "Object Property",
+      "count": 7
+    },
+    {
+      "type": "datatypeProperty",
+      "label": "Datatype Property",
+      "count": 7
+    },
+    {
+      "type": "annotationProperty",
+      "label": "Annotation Property",
+      "count": 0
+    },
+    {
+      "type": "concept",
+      "label": "Concept",
+      "count": 15
+    },
+    {
+      "type": "declaredTerm",
+      "label": "Declared Term",
+      "count": 4
+    },
+    {
+      "type": "external",
+      "label": "External Reference",
+      "count": 7
+    }
+  ],
+  "relationCounts": {
+    "subClassOf": 8,
+    "domain": 14,
+    "range": 14
+  }
+}
