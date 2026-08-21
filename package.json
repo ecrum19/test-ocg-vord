@@ -1,0 +1,11 @@
+{
+  "devDependencies": {
+    "ontology-companion-generator": "^1.1.1"
+  },
+  "scripts": {
+    "ocg:build": "ocg build",
+    "ocg:check": "ocg check",
+    "ocg:clean": "ocg clean",
+    "ocg:dev": "ocg dev"
+  }
+}

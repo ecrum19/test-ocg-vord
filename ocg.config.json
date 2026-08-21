@@ -1,0 +1,127 @@
+{
+  "$schema": "./ocg.config.schema.json",
+  "project": {
+    "title": "VoRD: Vocabulary of Restrictive Datasets",
+    "shortName": "VoRD",
+    "slug": "vord",
+    "description": "Vocabulary for describing operational restrictions of SPARQL services, aligned with SPARQL Service Description and validated with SHACL and ShEx.",
+    "namespace": "https://w3id.org/vord#",
+    "canonicalUri": "https://w3id.org/vord",
+    "version": "0.2",
+    "maintainer": "Elias Crum"
+  },
+  "sources": {
+    "ontology": "vocab/vord.ttl",
+    "ontologyFormat": "turtle",
+    "shapes": "shapes/vord.shacl.ttl",
+    "shex": "shex/vord.shex",
+    "spec": "spec/index.html",
+    "examples": [
+      {
+        "key": "basic-service",
+        "label": "Basic Service",
+        "path": "examples/basic-service.ttl",
+        "description": "A minimal SPARQL service description with rate, result-size, and response-time restrictions."
+      },
+      {
+        "key": "exhaustive-service",
+        "label": "Exhaustive Service",
+        "path": "examples/exhaustive-service.ttl",
+        "description": "An example covering the core VoRD restriction classes and terms."
+      },
+      {
+        "key": "wikidata-rate-restrictions",
+        "label": "Wikidata Rate Restrictions",
+        "path": "examples/wikidata-rate-restrictions.ttl",
+        "description": "An example VoRD description for Wikidata's public SPARQL endpoint."
+      }
+    ]
+  },
+  "features": {
+    "referencePage": true,
+    "graphPage": true,
+    "termPages": true,
+    "rawViewer": true,
+    "overviewCards": true,
+    "hierarchyAsset": true,
+    "specPage": true,
+    "usageGuidePage": true
+  },
+  "graph": {
+    "defaultView": "custom",
+    "custom": {
+      "enabled": true,
+      "defaultMode": "predicate-nodes",
+      "modes": {
+        "predicateNodes": true,
+        "predicateEdges": true
+      }
+    },
+    "webvowl": {
+      "enabled": true,
+      "serviceUrl": "https://service.tib.eu/webvowl/",
+      "ontologyUrl": "https://w3id.org/vord#",
+      "height": 760
+    },
+    "colors": {
+      "class": "#b7dcf6",
+      "objectProperty": "#bee7c3",
+      "datatypeProperty": "#f7d7ab",
+      "annotationProperty": "#f2c8cf",
+      "concept": "#d3c5f6",
+      "declaredTerm": "#e1e8ef",
+      "external": "#dfe6ee",
+      "subClassOf": "#1f6f92",
+      "domain": "#2f8040",
+      "range": "#ab6b22",
+      "broader": "#7b5ca7"
+    }
+  },
+  "theme": {
+    "fonts": {
+      "heading": "Space Grotesk",
+      "body": "IBM Plex Sans",
+      "mono": "IBM Plex Mono"
+    },
+    "colors": {
+      "pageBackground": "#f6f1ea",
+      "pageBackgroundAlt": "#edf3f7",
+      "panelBackground": "#ffffff",
+      "cardBackground": "#ffffff",
+      "text": "#1d1f22",
+      "mutedText": "#5f6b7a",
+      "accent": "#1f6f78",
+      "accentStrong": "#13535a",
+      "border": "#d6dee6"
+    }
+  },
+  "site": {
+    "basePath": "/",
+    "hero": {
+      "kicker": "Ontology Companion",
+      "headline": "A companion site for your ontology.",
+      "body": "Edit this configuration to customize the generated reference, graph, terms, artifacts, and documentation pages."
+    },
+    "resourcePanel": {
+      "title": "Published Artifacts",
+      "body": "Generated outputs from the configured ontology source package."
+    },
+    "overviewCards": [],
+    "customSections": [],
+    "footer": {
+      "primary": "",
+      "secondary": ""
+    },
+    "generator": {
+      "repositoryUrl": "https://github.com/ecrum19/ocg",
+      "documentationUrl": "https://github.com/ecrum19/ocg#readme"
+    }
+  },
+  "curation": {
+    "featuredTerms": [],
+    "viewerTabs": [
+      "ontology",
+      "config"
+    ]
+  }
+}
